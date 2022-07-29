@@ -35,6 +35,14 @@ The `~/.kube/config` file has been modified by the Kind installation. A few twea
 
 For the dev environment, the `./dev.sh` script has been setup. This is a shortcut to enforcing the use of the Dev (aka Kind) Kubernetes with Terraform. This script can take whatever arguments `terraform` would.
 
+## Secrets
+
+All secrets need to be stored in a file called `secrets.tfvars` at the root of the project. It should look like this:
+
+```hcl
+postgres_root_password = "####"
+```
+
 ## Debugging
 
 Set `TF_LOG=DEBUG` prior to running any terraform commands to see debug logs. Kubernetes can cause terraform to hang if the container crashes.
