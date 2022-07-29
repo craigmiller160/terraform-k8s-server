@@ -58,7 +58,14 @@ resource "kubernetes_deployment" "postgres" {
               }
             }
           }
-          # TODO need volumes
+          volume_mount {
+            mount_path = "/var/lib/postgresql/data"
+            name = "postgres-volume"
+          }
+          volume_mount {
+            mount_path = "/var/lib/postgresql/certs"
+            name = "postgres-cert-volume"
+          }
         }
 
         volume {
