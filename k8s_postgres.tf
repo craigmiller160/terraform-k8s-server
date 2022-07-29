@@ -72,6 +72,7 @@ resource "kubernetes_deployment" "postgres" {
           name = "postgres-volume"
           host_path {
             path = "/opt/kubernetes/data/postgres"
+            type = "DirectoryOrCreate"
           }
         }
 
@@ -79,6 +80,7 @@ resource "kubernetes_deployment" "postgres" {
           name = "postgres-cert-volume"
           host_path {
             path = "/opt/kubernetes/certs/postgres"
+            type = "DirectoryOrCreate"
           }
         }
       }
