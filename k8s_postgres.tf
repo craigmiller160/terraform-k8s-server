@@ -60,6 +60,20 @@ resource "kubernetes_deployment" "postgres" {
           }
           # TODO need volumes
         }
+
+        volume {
+          name = "postgres-volume"
+          host_path {
+            path = "/opt/kubernetes/data/postgres"
+          }
+        }
+
+        volume {
+          name = "postgres-cert-volume"
+          host_path {
+            path = "/opt/kubernetes/certs/postgres"
+          }
+        }
       }
     }
   }
