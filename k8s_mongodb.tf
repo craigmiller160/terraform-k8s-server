@@ -12,7 +12,7 @@ resource "kubernetes_config_map" "mongodb" {
 
 resource "kubernetes_secret" "mongodb_root_password" {
   metadata {
-    name = "mongodb_root_password"
+    name = "mongodb-root-password"
   }
   data = {
     MONGO_ROOT_PASSWORD = var.mongodb_root_password
