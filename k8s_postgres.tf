@@ -7,7 +7,7 @@ resource "kubernetes_config_map" "postgres" {
   }
 }
 
-resource "kubernetes_secret" "postgres_password" {
+resource "kubernetes_secret" "postgres_root_password" {
   metadata {
     name = "postgres-root-password"
   }
