@@ -15,6 +15,6 @@ resource "kubernetes_secret" "mongodb_root_password" {
     name = "mongodb_root_password"
   }
   data = {
-    MONGO_ROOT_PASSWORD = ""
+    MONGO_ROOT_PASSWORD = var.mongodb_root_password
   }
 }
