@@ -25,8 +25,20 @@ resource "kubernetes_deployment" "postgres" {
           port {
             container_port = 5432
           }
-          # TODO need configmap
-          # TODO need secret
+          env_from {
+            config_map_ref {
+              name = "postgres-config"
+            }
+          }
+          env {
+            name = "POSTGRES_PASSWORD"
+            value_from {
+              secret_key_ref {
+                name = "postgres-root-password"
+                key = "POSTGRES_ROOT_PASSWORD"
+              }
+            }
+          }
           # TODO need volumes
         }
       }
