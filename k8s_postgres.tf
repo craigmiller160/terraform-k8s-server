@@ -1,3 +1,22 @@
+resource "kubernetes_config_map" "postgres" {
+  metadata {
+    name = "postgres-config"
+  }
+  data = {
+    POSTGRES_USER = "postgres_root"
+  }
+}
+
+resource "kubernetes_secret" "postgres_password" {
+  metadata {
+    name = "postgres-root-password"
+  }
+
+  data = {
+    POSTGRES_ROOT_PASSWORD = var.postgres_root_password
+  }
+}
+
 resource "kubernetes_deployment" "postgres" {
   metadata {
     name = "postgres"
