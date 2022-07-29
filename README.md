@@ -34,3 +34,7 @@ The `~/.kube/config` file has been modified by the Kind installation. A few twea
 ### Running Terraform
 
 For the dev environment, the `./dev.sh` script has been setup. This is a shortcut to enforcing the use of the Dev (aka Kind) Kubernetes with Terraform. This script can take whatever arguments `terraform` would.
+
+## Debugging
+
+Set `TF_LOG=DEBUG` prior to running any terraform commands to see debug logs. Kubernetes can cause terraform to hang if the container crashes.
