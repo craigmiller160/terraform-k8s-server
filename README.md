@@ -18,10 +18,10 @@ Once installed, the container will be set to automatically start whenever Docker
 
 ### Create a Cluster
 
-Kind makes it easy to create a simple cluster. With one command the cluster is created and configured.
+Kind makes it easy to create a simple cluster. With one command the cluster is created and configured. Run the command in this directory so that the configuration can be used.
 
 ```bash
-kind create cluster
+kind create cluster --config=kind-config.yaml
 ```
 
 ### Change Kubernetes Config File
