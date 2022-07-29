@@ -64,3 +64,20 @@ resource "kubernetes_deployment" "postgres" {
     }
   }
 }
+
+resource "kubernetes_service" "postgres" {
+  metadata {
+    name = "postgres-service"
+  }
+  spec {
+    type = "NodePort"
+    selector = {
+      app = "postgres"
+    }
+    port {
+      port = 5432
+      target_port = 5432
+      node_port = 30001
+    }
+  }
+}
