@@ -23,6 +23,7 @@ resource "kubernetes_deployment" "postgres" {
   }
 
   spec {
+    revision_history_limit = 0
     replicas = 1
     selector {
       match_labels = {
