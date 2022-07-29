@@ -30,3 +30,7 @@ The `~/.kube/config` file has been modified by the Kind installation. A few twea
 
 1. Find the Context for Kind. Change the `name` from `kind-kind` to `kind` to make it easier to call from Kubectl.
 2. If the MicroK8s Kubernetes Server has been added to this device, its configuration should still be here. Change the `current-context` field to `microk8s` so that it is the default again.
+
+### Running Terraform
+
+For the dev environment, the `./dev.sh` script has been setup. This is a shortcut to enforcing the use of the Dev (aka Kind) Kubernetes with Terraform. This script can take whatever arguments `terraform` would.

@@ -1,3 +1,3 @@
 #!/bin/sh
 
-terraform $1 -var="k8s_context=kind"
+terraform $@ -var="k8s_context=kind"
