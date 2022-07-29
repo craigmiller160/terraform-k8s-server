@@ -35,6 +35,10 @@ The `~/.kube/config` file has been modified by the Kind installation. A few twea
 
 For the dev environment, the `./dev.sh` script has been setup. This is a shortcut to enforcing the use of the Dev (aka Kind) Kubernetes with Terraform. This script can take whatever arguments `terraform` would.
 
+### Working With NodePorts
+
+All node ports must be exposed via a mapping in the `kind-config.yml`. Otherwise they will not be accessible locally.
+
 ## Secrets
 
 All secrets need to be stored in a file called `secrets.tfvars` at the root of the project. It should look like this:
