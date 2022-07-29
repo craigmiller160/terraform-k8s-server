@@ -1,3 +1,32 @@
 # Terraform Kubernetes Server
 
 This is the Terraform-driven setup for my Kubernetes Server.
+
+## MacOS Development Environment Setup
+
+A few manual steps are necessary to prepare the MacOS development environment for Terraform
+
+### Install Kind
+
+Kind is a Kubernetes service that runs well on MacOS. It runs as a Docker container, so before doing anything with it make sure Docker is running. Install it with:
+
+```bash
+brew install kind
+```
+
+Once installed, the container will be set to automatically start whenever Docker does.
+
+### Create a Cluster
+
+Kind makes it easy to create a simple cluster. With one command the cluster is created and configured.
+
+```bash
+kind create cluster
+```
+
+### Change Kubernetes Config File
+
+The `~/.kube/config` file has been modified by the Kind installation. A few tweaks are necessary to get it up and running.
+
+1. Find the Context for Kind. Change the `name` from `kind-kind` to `kind` to make it easier to call from Kubectl.
+2. If the MicroK8s Kubernetes Server has been added to this device, its configuration should still be here. Change the `current-context` field to `microk8s` so that it is the default again.
