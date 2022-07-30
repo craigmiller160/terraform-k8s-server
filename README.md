@@ -4,10 +4,10 @@ This is the Terraform-driven setup for my Kubernetes Server.
 
 ## Terraform Setup
 
-Terraform must be installed on the development machine.
+Terraform & TFLint must be installed on the development machine.
 
 ```bash
-brew install terraform
+brew install terraform tflint
 ```
 
 ## MacOS Development Environment Setup
