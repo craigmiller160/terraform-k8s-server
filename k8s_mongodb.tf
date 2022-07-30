@@ -34,7 +34,7 @@ resource "kubernetes_deployment" "mongodb" {
     template {
       metadata {
         labels = {
-          app = "postgres"
+          app = "mongodb"
         }
       }
       spec {
