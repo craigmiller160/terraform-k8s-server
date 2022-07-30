@@ -1,4 +1,4 @@
 #!/bin/sh
 
-terraform lint
+terraform fmt
 tflint .

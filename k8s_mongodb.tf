@@ -87,9 +87,9 @@ resource "kubernetes_service" "mongodb" {
       app = "mongodb"
     }
     port {
-      port = 27017
+      port        = 27017
       target_port = 27017
-      node_port = 30002
+      node_port   = 30002
     }
   }
 }

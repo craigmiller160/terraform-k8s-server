@@ -1,6 +1,7 @@
 terraform {
   backend "kubernetes" {
-    secret_suffix    = "state"
+    secret_suffix  = "state"
+    config_context = var.k8s_context
   }
 }
 
