@@ -2,6 +2,14 @@
 
 This is the Terraform-driven setup for my Kubernetes Server.
 
+## Terraform Setup
+
+Terraform must be installed on the development machine.
+
+```bash
+brew install terraform
+```
+
 ## MacOS Development Environment Setup
 
 A few manual steps are necessary to prepare the MacOS development environment for Terraform
