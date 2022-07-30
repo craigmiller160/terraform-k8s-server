@@ -64,8 +64,32 @@ resource "kubernetes_deployment" "mongodb" {
             mount_path = "/data/db"
             name       = "mongodb-volume"
           }
+          # TODO leaving out cert dir for now
+        }
+        volume {
+          name = "mongodb-volume"
+          host_path {
+            path = "/opt/kubernetes/data/mongodb"
+          }
         }
       }
+    }
+  }
+}
+
+resource "kubernetes_service" "mongodb" {
+  metadata {
+    name = "mongodb-service"
+  }
+  spec {
+    type = "NodePort"
+    selector = {
+      app = "mongodb"
+    }
+    port {
+      port = 27017
+      target_port = 27017
+      node_port = 30002
     }
   }
 }
