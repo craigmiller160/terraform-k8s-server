@@ -1,7 +1,9 @@
 terraform {
   backend "kubernetes" {
     secret_suffix  = "state"
-    config_context = var.k8s_context
+    config_path    = "~/.kube/config"
+    # TODO figuring this out
+    config_context = "kind"
   }
 }
 
