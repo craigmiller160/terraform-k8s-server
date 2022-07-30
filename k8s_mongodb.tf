@@ -4,9 +4,9 @@ resource "kubernetes_config_map" "mongodb" {
   }
   data = {
     MONGO_INITDB_ROOT_USERNAME = "mongo_root"
-    MONGO_HOST = "mongodb-service"
-    MONGO_AUTH_DB = "admin"
-    MONGO_PORT = "27017"
+    MONGO_HOST                 = "mongodb-service"
+    MONGO_AUTH_DB              = "admin"
+    MONGO_PORT                 = "27017"
   }
 }
 
@@ -25,7 +25,7 @@ resource "kubernetes_deployment" "mongodb" {
   }
   spec {
     revision_history_limit = 0
-    replicas = 1
+    replicas               = 1
     selector {
       match_labels = {
         app = "mongodb"
@@ -39,7 +39,7 @@ resource "kubernetes_deployment" "mongodb" {
       }
       spec {
         container {
-          name = "mongodb"
+          name  = "mongodb"
           image = "mongo:4.4.2"
           # TODO need args for tls
           image_pull_policy = "IfNotPresent"
@@ -56,13 +56,13 @@ resource "kubernetes_deployment" "mongodb" {
             value_from {
               secret_key_ref {
                 name = "mongodb-root-password"
-                key = "MONGO_ROOT_PASSWORD"
+                key  = "MONGO_ROOT_PASSWORD"
               }
             }
           }
           volume_mount {
             mount_path = "/data/db"
-            name = "mongodb-volume"
+            name       = "mongodb-volume"
           }
         }
       }

@@ -24,7 +24,7 @@ resource "kubernetes_deployment" "postgres" {
 
   spec {
     revision_history_limit = 0
-    replicas = 1
+    replicas               = 1
     selector {
       match_labels = {
         app = "postgres"
@@ -38,7 +38,7 @@ resource "kubernetes_deployment" "postgres" {
       }
       spec {
         container {
-          name = "postgres"
+          name  = "postgres"
           image = "postgres:12.5"
           # TODO need args for ssl certs
           image_pull_policy = "IfNotPresent"
@@ -55,17 +55,17 @@ resource "kubernetes_deployment" "postgres" {
             value_from {
               secret_key_ref {
                 name = "postgres-root-password"
-                key = "POSTGRES_ROOT_PASSWORD"
+                key  = "POSTGRES_ROOT_PASSWORD"
               }
             }
           }
           volume_mount {
             mount_path = "/var/lib/postgresql/data"
-            name = "postgres-volume"
+            name       = "postgres-volume"
           }
           volume_mount {
             mount_path = "/var/lib/postgresql/certs"
-            name = "postgres-cert-volume"
+            name       = "postgres-cert-volume"
           }
         }
 
@@ -99,9 +99,9 @@ resource "kubernetes_service" "postgres" {
       app = "postgres"
     }
     port {
-      port = 5432
+      port        = 5432
       target_port = 5432
-      node_port = 30001
+      node_port   = 30001
     }
   }
 }
