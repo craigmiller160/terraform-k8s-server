@@ -1,4 +1,3 @@
-Modules
 TLS Certs
 Nexus
 1Password Secrets
