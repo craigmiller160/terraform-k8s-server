@@ -12,4 +12,6 @@ provider "kubernetes" {
 
 module "databases" {
   source = "./modules/databases"
+  postgres_root_password = var.postgres_root_password
+  mongodb_root_password = var.mongodb_root_password
 }
