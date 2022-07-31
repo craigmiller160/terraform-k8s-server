@@ -2,8 +2,6 @@ terraform {
   backend "kubernetes" {
     secret_suffix  = "state"
     config_path    = "~/.kube/config"
-    # TODO need this to be dynamic
-    config_context = "kind"
   }
 }
 
