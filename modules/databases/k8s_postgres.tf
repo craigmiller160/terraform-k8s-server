@@ -66,6 +66,7 @@ resource "kubernetes_deployment" "postgres" {
           volume_mount {
             mount_path = "/var/lib/postgresql/certs"
             name       = "postgres-cert-volume"
+            read_only = true
           }
         }
 
@@ -79,9 +80,9 @@ resource "kubernetes_deployment" "postgres" {
 
         volume {
           name = "postgres-cert-volume"
-          host_path {
-            path = "/opt/kubernetes/certs/postgres"
-            type = "DirectoryOrCreate"
+          secret {
+            # TODO change this
+            secret_name = "my-tls-secret"
           }
         }
       }
