@@ -18,10 +18,6 @@ resource "kubernetes_secret" "postgres_root_password" {
 }
 
 resource "kubernetes_deployment" "postgres" {
-  # TODO do I need this?
-#  depends_on = [
-#    kubernetes_secret.database_tls_certs
-#  ]
   metadata {
     name = "postgres"
   }
@@ -44,14 +40,14 @@ resource "kubernetes_deployment" "postgres" {
         container {
           name  = "postgres"
           image = "postgres:12.5"
-          args = [
-            "-c",
-            "ssl=on",
-            "-c",
-            "ssl_cert_file=/var/lib/postgresql/certs/tls.crt",
-            "-c",
-            "ssl_key_file=/var/lib/postgresql/certs/tls.key"
-          ]
+#          args = [
+#            "-c",
+#            "ssl=on",
+#            "-c",
+#            "ssl_cert_file=/var/lib/postgresql/certs/tls.crt",
+#            "-c",
+#            "ssl_key_file=/var/lib/postgresql/certs/tls.key"
+#          ]
           image_pull_policy = "IfNotPresent"
           port {
             container_port = 5432
