@@ -38,7 +38,7 @@ resource "kubernetes_deployment" "postgres" {
       }
       spec {
         init_container {
-          name = "experiment"
+          name = "prepare-certs"
           image = "busybox:1.28"
           command = [
             "sh",

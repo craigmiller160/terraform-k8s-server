@@ -38,10 +38,32 @@ resource "kubernetes_deployment" "mongodb" {
         }
       }
       spec {
+        init_container {
+          name = "prepare-certs"
+          image = "busybox:1.28"
+          command = [
+            "sh",
+            "-c",
+            "cat /certs-secret/tls.crt > /certs/mongodb.pem && cat /certs-secret/tls.key >> /certs/mongodb.pem"
+          ]
+          volume_mount {
+            mount_path = "/certs-secret"
+            name       = "mongodb-certs-secret-volume"
+          }
+          volume_mount {
+            mount_path = "/certs"
+            name       = "mongodb-certs-volume"
+          }
+        }
         container {
           name  = "mongodb"
           image = "mongo:4.4.2"
-          # TODO need args for tls
+          args = [
+            "--tlsMode",
+            "requireTLS",
+            "--tlsCertificateKeyFile",
+            "/certs/mongodb.pem"
+          ]
           image_pull_policy = "IfNotPresent"
           port {
             container_port = 27017
@@ -77,6 +99,10 @@ resource "kubernetes_deployment" "mongodb" {
         }
         volume {
           name = "mongodb-certs-volume"
+          empty_dir {}
+        }
+        volume {
+          name = "mongodb-certs-secret-volume"
           secret {
             secret_name = kubernetes_secret.database_tls_certs.metadata.0.name
           }
