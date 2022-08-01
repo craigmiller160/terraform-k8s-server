@@ -44,7 +44,14 @@ resource "kubernetes_deployment" "postgres" {
         container {
           name  = "postgres"
           image = "postgres:12.5"
-          # TODO need args for ssl certs
+          args = [
+            "-c",
+            "ssl=on",
+            "-c",
+            "ssl_cert_file=/var/lib/postgresql/certs/tls.crt",
+            "-c",
+            "ssl_key_file=/var/lib/postgresql/certs/tls.key"
+          ]
           image_pull_policy = "IfNotPresent"
           port {
             container_port = 5432
