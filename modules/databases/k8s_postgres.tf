@@ -18,9 +18,10 @@ resource "kubernetes_secret" "postgres_root_password" {
 }
 
 resource "kubernetes_deployment" "postgres" {
-  depends_on = [
-    kubernetes_secret.database_tls_certs
-  ]
+  # TODO do I need this?
+#  depends_on = [
+#    kubernetes_secret.database_tls_certs
+#  ]
   metadata {
     name = "postgres"
   }
@@ -50,14 +51,14 @@ resource "kubernetes_deployment" "postgres" {
           }
           env_from {
             config_map_ref {
-              name = "postgres-config"
+              name = kubernetes_config_map.postgres.metadata.0.name
             }
           }
           env {
             name = "POSTGRES_PASSWORD"
             value_from {
               secret_key_ref {
-                name = "postgres-root-password"
+                name = kubernetes_secret.postgres_root_password.metadata.0.name
                 key  = "POSTGRES_ROOT_PASSWORD"
               }
             }

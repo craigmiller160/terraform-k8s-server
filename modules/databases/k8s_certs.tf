@@ -4,7 +4,7 @@ resource "kubernetes_secret" "database_tls_certs" {
   }
   type = "kubernetes.io/tls"
   data = {
-    "tls.cert" = var.database_cert
+    "tls.crt" = var.database_cert
     "tls.key" = var.database_key
   }
 }
