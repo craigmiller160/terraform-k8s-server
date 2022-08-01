@@ -43,7 +43,7 @@ resource "kubernetes_deployment" "postgres" {
           command = [
             "sh",
             "-c",
-            "cp /certs-secret/* /certs && chmod 640 /certs/* && chown 999 /certs/*"
+            "cp /certs-secret/* /certs && chmod 600 /certs/* && chown 999 /certs/*"
           ]
           volume_mount {
             mount_path = "/certs-secret"
@@ -57,14 +57,14 @@ resource "kubernetes_deployment" "postgres" {
         container {
           name  = "postgres"
           image = "postgres:12.5"
-#          args = [
-#            "-c",
-#            "ssl=on",
-#            "-c",
-#            "ssl_cert_file=/var/lib/postgresql/certs/tls.crt",
-#            "-c",
-#            "ssl_key_file=/var/lib/postgresql/certs/tls.key"
-#          ]
+          args = [
+            "-c",
+            "ssl=on",
+            "-c",
+            "ssl_cert_file=/var/lib/postgresql/certs/tls.crt",
+            "-c",
+            "ssl_key_file=/var/lib/postgresql/certs/tls.key"
+          ]
           image_pull_policy = "IfNotPresent"
           port {
             container_port = 5432
