@@ -18,6 +18,9 @@ resource "kubernetes_secret" "postgres_root_password" {
 }
 
 resource "kubernetes_deployment" "postgres" {
+  depends_on = [
+    kubernetes_secret.database_tls_certs
+  ]
   metadata {
     name = "postgres"
   }
