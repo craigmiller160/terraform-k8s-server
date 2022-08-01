@@ -81,8 +81,7 @@ resource "kubernetes_deployment" "postgres" {
         volume {
           name = "postgres-cert-volume"
           secret {
-            # TODO change this
-            secret_name = "my-tls-secret"
+            secret_name = "database-tls-certs"
           }
         }
       }
