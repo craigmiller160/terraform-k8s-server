@@ -41,12 +41,17 @@ resource "kubernetes_deployment" "postgres" {
           name = "experiment"
           image = "busybox:1.28"
           command = [
-            "sh", "-c", "echo $(ls /var/lib/postgresql/certs)"
-#            "sh", "-c", "echo 'Hello World'"
+            "sh",
+            "-c",
+            "cp /certs-secret/* /certs && chmod 640 /certs/* && chown 999 /certs/*"
           ]
           volume_mount {
-            mount_path = "/var/lib/postgresql/certs"
-            name       = "postgres-cert-volume"
+            mount_path = "/certs-secret"
+            name       = "postgres-certs-secret-volume"
+          }
+          volume_mount {
+            mount_path = "/certs"
+            name       = "postgres-certs-volume"
           }
         }
         container {
@@ -84,7 +89,7 @@ resource "kubernetes_deployment" "postgres" {
           }
           volume_mount {
             mount_path = "/var/lib/postgresql/certs"
-            name       = "postgres-cert-volume"
+            name       = "postgres-certs-volume"
           }
         }
 
@@ -97,10 +102,14 @@ resource "kubernetes_deployment" "postgres" {
         }
 
         volume {
-          name = "postgres-cert-volume"
+          name = "postgres-certs-volume"
+          empty_dir {}
+        }
+
+        volume {
+          name = "postgres-certs-secret-volume"
           secret {
             secret_name = "database-tls-certs"
-            default_mode = "0640"
           }
         }
       }
