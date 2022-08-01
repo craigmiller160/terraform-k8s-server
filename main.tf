@@ -17,3 +17,7 @@ module "databases" {
   database_cert          = var.database_cert
   database_key           = var.database_key
 }
+
+module "utilities" {
+  source = "./modules/utilities"
+}
