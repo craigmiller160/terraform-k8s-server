@@ -48,14 +48,14 @@ resource "kubernetes_deployment" "mongodb" {
           }
           env_from {
             config_map_ref {
-              name = "mongodb-config"
+              name = kubernetes_config_map.mongodb.metadata.0.name
             }
           }
           env {
             name = "MONGO_INITDB_ROOT_PASSWORD"
             value_from {
               secret_key_ref {
-                name = "mongodb-root-password"
+                name = kubernetes_secret.mongodb_root_password.metadata.0.name
                 key  = "MONGO_ROOT_PASSWORD"
               }
             }
@@ -64,12 +64,21 @@ resource "kubernetes_deployment" "mongodb" {
             mount_path = "/data/db"
             name       = "mongodb-volume"
           }
-          # TODO leaving out cert dir for now
+          volume_mount {
+            mount_path = "/certs"
+            name       = "mongodb-certs-volume"
+          }
         }
         volume {
           name = "mongodb-volume"
           host_path {
             path = "/opt/kubernetes/data/mongodb"
+          }
+        }
+        volume {
+          name = "mongodb-certs-volume"
+          secret {
+            secret_name = kubernetes_secret.database_tls_certs.metadata.0.name
           }
         }
       }
