@@ -21,12 +21,21 @@ resource "kubernetes_deployment" "onepassword_connect_server" {
       }
       spec {
         container {
-          name = "1password"
+          name = "1password-connect"
           image = "1password/connect-api:1.5"
           image_pull_policy = "IfNotPresent"
           port {
             container_port = 8080
           }
+          volume_mount {
+            mount_path = "/home/opuser/.op/data"
+            name       = "1password-volume"
+          }
+        }
+        container {
+          name = "1password-sync"
+          image = "1password/connect-sync:1.5"
+          image_pull_policy = "IfNotPresent"
           volume_mount {
             mount_path = "/home/opuser/.op/data"
             name       = "1password-volume"
