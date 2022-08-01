@@ -53,6 +53,9 @@ All secrets need to be stored in a file called `secrets.tfvars` at the root of t
 
 ```hcl
 postgres_root_password = "####"
+mongodb_root_password = "####"
+database_cert = "####"
+database_key = "####"
 ```
 
 ## Debugging

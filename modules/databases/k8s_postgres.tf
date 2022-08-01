@@ -37,6 +37,18 @@ resource "kubernetes_deployment" "postgres" {
         }
       }
       spec {
+        init_container {
+          name = "experiment"
+          image = "busybox:1.28"
+          command = [
+            "sh", "-c", "echo $(ls /var/lib/postgresql/certs)"
+#            "sh", "-c", "echo 'Hello World'"
+          ]
+          volume_mount {
+            mount_path = "/var/lib/postgresql/certs"
+            name       = "postgres-cert-volume"
+          }
+        }
         container {
           name  = "postgres"
           image = "postgres:12.5"
