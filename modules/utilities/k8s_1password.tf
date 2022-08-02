@@ -25,11 +25,15 @@ resource "kubernetes_deployment" "onepassword_connect_server" {
           image = "1password/connect-api:1.5"
           image_pull_policy = "IfNotPresent"
           port {
-            container_port = 8080
+            container_port = 8081
           }
           volume_mount {
             mount_path = "/home/opuser/.op/data"
             name       = "1password-volume"
+          }
+          env {
+            name = "OP_HTTP_PORT"
+            value = "8081"
           }
         }
         container {
