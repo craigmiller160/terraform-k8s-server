@@ -1,4 +1,14 @@
 
+resource "kubernetes_secret" "onepassword_creds" {
+  metadata {
+    name = "1password-creds"
+  }
+
+  data = {
+    credentials = base64decode(var.onepassword_creds)
+  }
+}
+
 # TODO need TLS for this
 
 resource "kubernetes_deployment" "onepassword" {
