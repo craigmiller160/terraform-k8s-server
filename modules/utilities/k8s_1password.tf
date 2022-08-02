@@ -117,7 +117,7 @@ resource "kubernetes_service_account" "onepassword_operator" {
 resource "kubernetes_cluster_role_binding" "onepassword_operator" {
   metadata {
     name = "onepassword-operator-default"
-    namespace = "default"
+#    namespace = "default"
   }
   role_ref {
     api_group = "rbac.authorization.k8s.io"
