@@ -41,6 +41,10 @@ resource "kubernetes_deployment" "onepassword" {
             mount_path = "/home/opuser/.op/data"
             name       = "1password-volume"
           }
+          volume_mount {
+            mount_path = "/home/opuser/.op/creds"
+            name       = "1password-creds-secret-volume"
+          }
           env {
             name = "OP_HTTP_PORT"
             value = "8081"
@@ -57,10 +61,20 @@ resource "kubernetes_deployment" "onepassword" {
             mount_path = "/home/opuser/.op/data"
             name       = "1password-volume"
           }
+          volume_mount {
+            mount_path = "/home/opuser/.op/creds"
+            name       = "1password-creds-secret-volume"
+          }
         }
         volume {
           name = "1password-volume"
           empty_dir {}
+        }
+        volume {
+          name = "1password-creds-secret-volume"
+          secret {
+            secret_name = kubernetes_secret.onepassword_creds.metadata.0.name
+          }
         }
       }
     }

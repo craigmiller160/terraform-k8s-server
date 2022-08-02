@@ -59,6 +59,8 @@ database_cert = "####"
 database_key = "####"
 ```
 
+# TODO mention 1password creds, base64 encoded, etc
+
 ## Debugging
 
 Set `TF_LOG=DEBUG` prior to running any terraform commands to see debug logs. Kubernetes can cause terraform to hang if the container crashes.
