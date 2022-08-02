@@ -1,11 +1,12 @@
 
-resource "kubernetes_secret" "onepassword_creds" {
+resource "kubernetes_secret" "onepassword" {
   metadata {
-    name = "1password-creds"
+    name = "1password"
   }
 
   data = {
     credentials = base64decode(var.onepassword_creds)
+    token = var.onepassword_token
   }
 }
 
