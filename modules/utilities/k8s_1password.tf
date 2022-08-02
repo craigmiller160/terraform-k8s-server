@@ -1,7 +1,7 @@
 
 # TODO need TLS for this
 
-resource "kubernetes_deployment" "onepassword_connect_server" {
+resource "kubernetes_deployment" "onepassword" {
   metadata {
     name = "1password"
   }
@@ -53,6 +53,23 @@ resource "kubernetes_deployment" "onepassword_connect_server" {
           empty_dir {}
         }
       }
+    }
+  }
+}
+
+resource "kubernetes_service" "onepassword" {
+  metadata {
+    name = "1password-service"
+  }
+  spec {
+    type = "NodePort"
+    selector = {
+      app = "1password"
+    }
+    port {
+      port = 8081
+      target_port = 8081
+      node_port = 30010
     }
   }
 }

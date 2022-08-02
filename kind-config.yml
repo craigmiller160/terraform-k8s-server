@@ -11,4 +11,6 @@ nodes:
         hostPort: 30003
       - containerPort: 30004
         hostPort: 30004
+      - containerPort: 30010
+        hostPort: 30010
   - role: worker
