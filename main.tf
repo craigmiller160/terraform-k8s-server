@@ -20,4 +20,5 @@ module "databases" {
 
 module "utilities" {
   source = "./modules/utilities"
+  onepassword_creds = var.onepassword_creds
 }

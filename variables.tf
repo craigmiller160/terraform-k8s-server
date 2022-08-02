@@ -17,3 +17,7 @@ variable "database_cert" {
 variable "database_key" {
   type = string
 }
+
+variable "onepassword_creds" {
+  type = string
+}
