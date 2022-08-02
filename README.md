@@ -32,12 +32,13 @@ Kind makes it easy to create a simple cluster. With one command the cluster is c
 kind create cluster --config=./kind-config.yml
 ```
 
-### Change Kubernetes Config File
+### Change Kubernetes Context
 
-The `~/.kube/config` file has been modified by the Kind installation. A few tweaks are necessary to get it up and running.
+Use the following command to change the selected Kubernetes context.
 
-1. Find the Context for Kind. Change the `name` from `kind-kind` to `kind` to make it easier to call from Kubectl.
-2. If the MicroK8s Kubernetes Server has been added to this device, its configuration should still be here. Change the `current-context` field to `microk8s` so that it is the default again.
+```bash
+kubectl config use-context kind-kind
+```
 
 ### Running Terraform
 
