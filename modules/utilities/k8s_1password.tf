@@ -108,6 +108,70 @@ resource "kubernetes_service" "onepassword" {
   }
 }
 
+resource "kubernetes_service_account" "onepassword_operator" {
+  metadata {
+    name = "onepassword-operator"
+  }
+}
+
+resource "kubernetes_cluster_role_binding" "onepassword_operator" {
+  metadata {
+    name = "onepassword-operator-default"
+    namespace = "default"
+  }
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "ClusterRole"
+    name      = "onepassword-operator"
+  }
+  subject {
+    kind = "ServiceAccount"
+    name = "onepassword-operator"
+  }
+}
+
+resource "kubernetes_cluster_role" "onepassword_operator" {
+  metadata {
+    name = "onepassword-operator"
+  }
+  rule {
+    api_groups = [""]
+    resources = ["pods", "services", "services/finalizers", "endpoints", "persistentvolumeclaims", "events", "configmaps", "secrets", "namespaces"]
+    verbs = ["create", "delete", "get", "list", "patch", "update", "watch"]
+  }
+  rule {
+    api_groups = ["apps"]
+    resources = ["deployments", "daemonsets", "replicasets", "statefulsets"]
+    verbs = ["create", "delete", "get", "list", "patch", "update", "watch"]
+  }
+  rule {
+    api_groups = ["monitoring.coreos.com"]
+    resources = ["servicemonitors"]
+    verbs = ["get", "create"]
+  }
+  rule {
+    api_groups = ["apps"]
+    resource_names = ["onepassword-operator"]
+    resources = ["deployments/finalizers"]
+    verbs = ["update"]
+  }
+  rule {
+    api_groups = [""]
+    resources = ["pods"]
+    verbs = ["get"]
+  }
+  rule {
+    api_groups = ["apps"]
+    resources = ["replicasets", "deployments"]
+    verbs = ["get"]
+  }
+  rule {
+    api_groups = ["onepassword.com"]
+    resources = ["*"]
+    verbs = ["create", "delete", "get", "list", "patch", "update", "watch"]
+  }
+}
+
 resource "kubernetes_deployment" "onepassword_operator" {
   metadata {
     name = "onepassword-operator"
@@ -127,7 +191,7 @@ resource "kubernetes_deployment" "onepassword_operator" {
         }
       }
       spec {
-#        service_account_name = "onepassword-operator"
+        service_account_name = "onepassword-operator"
         container {
           name = "onepassword-operator"
           image = "1password/onepassword-operator:1.5"
