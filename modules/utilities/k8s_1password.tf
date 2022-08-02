@@ -82,7 +82,7 @@ resource "kubernetes_deployment" "onepassword" {
         volume {
           name = "1password-creds-secret-volume"
           secret {
-            secret_name = kubernetes_secret.onepassword_creds.metadata.0.name
+            secret_name = kubernetes_secret.onepassword.metadata.0.name
           }
         }
       }
