@@ -59,7 +59,7 @@ resource "kubernetes_deployment" "onepassword" {
 
 resource "kubernetes_service" "onepassword" {
   metadata {
-    name = "1password-service"
+    name = "onepassword-service"
   }
   spec {
     type = "NodePort"
