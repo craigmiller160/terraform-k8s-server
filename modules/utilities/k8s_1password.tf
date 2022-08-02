@@ -95,6 +95,7 @@ resource "kubernetes_service" "onepassword" {
     name = "onepassword-service"
   }
   spec {
+    # TODO maybe make this ClusterIP, then it won't need TLS
     type = "NodePort"
     selector = {
       app = "1password"
@@ -103,6 +104,73 @@ resource "kubernetes_service" "onepassword" {
       port = 8081
       target_port = 8081
       node_port = 30010
+    }
+  }
+}
+
+resource "kubernetes_deployment" "onepassword_operator" {
+  metadata {
+    name = "onepassword-operator"
+  }
+  spec {
+    revision_history_limit = 0
+    replicas = 1
+    selector {
+      match_labels = {
+        name = "onepassword-operator"
+      }
+    }
+    template {
+      metadata {
+        labels = {
+          name = "onepassword-operator"
+        }
+      }
+      spec {
+        service_account_name = "onepassword-operator"
+        container {
+          name = "onepassword-operator"
+          image = "1password/onepassword-operator:1.5"
+          command = ["/manager"]
+          env {
+            name = "WATCH_NAMESPACE"
+            value = "default"
+          }
+          env {
+            name = "POD_NAME"
+            value_from {
+              field_ref {
+                field_path = "metadata.name"
+              }
+            }
+          }
+          env {
+            name = "OPERATOR_NAME"
+            value = "onepassword-operator"
+          }
+          env {
+            name = "OP_CONNECT_HOST"
+            value = "http://onepassword-service:8081"
+          }
+          env {
+            name = "POLLING_INTERVAL"
+            value = "10"
+          }
+          env {
+            name = "OP_CONNECT_TOKEN"
+            value_from {
+              secret_key_ref {
+                name = "onepassword"
+                key = "token"
+              }
+            }
+          }
+          env {
+            name = "AUTO_RESTART"
+            value = "false"
+          }
+        }
+      }
     }
   }
 }
