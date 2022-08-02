@@ -49,6 +49,10 @@ resource "kubernetes_deployment" "onepassword" {
             name = "OP_HTTP_PORT"
             value = "8081"
           }
+          env {
+            name = "OP_SESSION"
+            value = "/home/opuser/.op/creds/credentials"
+          }
         }
         container {
           name = "1password-sync"
@@ -64,6 +68,10 @@ resource "kubernetes_deployment" "onepassword" {
           volume_mount {
             mount_path = "/home/opuser/.op/creds"
             name       = "1password-creds-secret-volume"
+          }
+          env {
+            name = "OP_SESSION"
+            value = "/home/opuser/.op/creds/credentials"
           }
         }
         volume {
