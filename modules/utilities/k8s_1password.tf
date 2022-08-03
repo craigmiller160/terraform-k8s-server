@@ -172,6 +172,19 @@ resource "kubernetes_cluster_role" "onepassword_operator" {
   }
 }
 
+resource "kubernetes_config_map" "onepassword_operator" {
+  metadata {
+    name = "onepassword-operator"
+  }
+  data = {
+    WATCH_NAMESPACE = "default"
+    OPERATOR_NAME = "onepassword-operator"
+    OP_CONNECT_HOST = "http://onepassword-service:8081"
+    POLLING_INTERVAL = "10"
+    AUTO_RESTART = "false"
+  }
+}
+
 resource "kubernetes_deployment" "onepassword_operator" {
   metadata {
     name = "onepassword-operator"
@@ -196,9 +209,10 @@ resource "kubernetes_deployment" "onepassword_operator" {
           name = "onepassword-operator"
           image = "1password/onepassword-operator:1.5"
           command = ["/manager"]
-          env {
-            name = "WATCH_NAMESPACE"
-            value = "default"
+          env_from {
+            config_map_ref {
+              name = kubernetes_config_map.onepassword_operator.metadata.0.name
+            }
           }
           env {
             name = "POD_NAME"
@@ -209,18 +223,6 @@ resource "kubernetes_deployment" "onepassword_operator" {
             }
           }
           env {
-            name = "OPERATOR_NAME"
-            value = "onepassword-operator"
-          }
-          env {
-            name = "OP_CONNECT_HOST"
-            value = "http://onepassword-service:8081"
-          }
-          env {
-            name = "POLLING_INTERVAL"
-            value = "10"
-          }
-          env {
             name = "OP_CONNECT_TOKEN"
             value_from {
               secret_key_ref {
@@ -228,10 +230,6 @@ resource "kubernetes_deployment" "onepassword_operator" {
                 key = "token"
               }
             }
-          }
-          env {
-            name = "AUTO_RESTART"
-            value = "false"
           }
         }
       }
