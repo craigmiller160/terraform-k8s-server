@@ -185,6 +185,19 @@ resource "kubernetes_config_map" "onepassword_operator" {
   }
 }
 
+resource "kubernetes_manifest" "onepassword_resource_definition" {
+  manifest = {
+    "apiVersion" = "apiextensions.k8s.io/v1"
+    "kind" = "CustomResourceDefinition"
+    "metadata" = {
+      "name" = "onepassworditems.onepassword.com"
+    }
+    "spec" = {
+      "group" = "onepassword.com"
+    }
+  }
+}
+
 resource "kubernetes_deployment" "onepassword_operator" {
   metadata {
     name = "onepassword-operator"
