@@ -1,0 +1,2 @@
+FROM busybox:1.28
+COPY /usr/bin/openssl /openssl
