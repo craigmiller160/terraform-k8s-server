@@ -23,6 +23,9 @@ provider "kubernetes" {
 
 provider "docker" {
   host = "unix:///var/run/docker.sock"
+  registry_auth {
+    address = "192.168.7.232:3200"
+  }
 }
 
 module "databases" {

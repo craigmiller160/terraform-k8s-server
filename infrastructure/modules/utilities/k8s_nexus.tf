@@ -6,17 +6,16 @@ locals {
   nexus_service_doc = local.nexus_all_docs.1
 }
 
-resource "docker_image" "extended_busybox" {
-  name = "extended-busybox"
+resource "docker_registry_image" "extended_busybox" {
+  name = "192.168.7.232:3200/extended-busybox:1.1"
   build {
-    path = "${path.module}/docker"
-    tag = ["192.168.7.232:3200/extended-busybox:1.1"]
+    context = "${path.module}/docker"
     dockerfile = "ExtendedBusyBox_Dockerfile"
   }
 }
 
 resource "kubernetes_manifest" "nexus_deployment" {
-  depends_on = [docker_image.extended_busybox]
+  depends_on = [docker_registry_image.extended_busybox]
   manifest = yamldecode(local.nexus_deployment_doc)
 }
 
