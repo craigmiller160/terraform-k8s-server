@@ -3,21 +3,21 @@ resource "kubernetes_config_map" "mongodb" {
     name = "mongodb-config"
   }
   data = {
-    MONGO_INITDB_ROOT_USERNAME = "mongo_root"
+#    MONGO_INITDB_ROOT_USERNAME = "mongo_root"
     MONGO_HOST                 = "mongodb-service"
     MONGO_AUTH_DB              = "admin"
     MONGO_PORT                 = "27017"
   }
 }
 
-resource "kubernetes_secret" "mongodb_root_password" {
-  metadata {
-    name = "mongodb-root-password"
-  }
-  data = {
-    MONGO_ROOT_PASSWORD = var.mongodb_root_password
-  }
-}
+#resource "kubernetes_secret" "mongodb_root_password" {
+#  metadata {
+#    name = "mongodb-root-password"
+#  }
+#  data = {
+#    MONGO_ROOT_PASSWORD = var.mongodb_root_password
+#  }
+#}
 
 resource "kubernetes_deployment" "mongodb" {
   metadata {
@@ -77,8 +77,17 @@ resource "kubernetes_deployment" "mongodb" {
             name = "MONGO_INITDB_ROOT_PASSWORD"
             value_from {
               secret_key_ref {
-                name = kubernetes_secret.mongodb_root_password.metadata.0.name
-                key  = "MONGO_ROOT_PASSWORD"
+                name = "mongodb-root-account"
+                key  = "password"
+              }
+            }
+          }
+          env {
+            name = "MONGO_INITDB_ROOT_USERNAME"
+            value_from {
+              secret_key_ref {
+                name = "mongodb-root-account"
+                key = "username"
               }
             }
           }
