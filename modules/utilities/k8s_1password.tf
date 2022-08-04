@@ -1,4 +1,12 @@
 
+locals {
+  onepassword_connect_all_docs = split(file("${path.module}/k8s_yaml/1password/1password_connect.yml"))
+  onepassword_connect_configmap_doc = local.onepassword_connect_all_docs.0
+  onepassword_sync_configmap_doc = local.onepassword_connect_all_docs.1
+  onepassword_connect_sync_deployment_doc = local.onepassword_connect_all_docs.2
+  onepassword_connect_service_doc = local.onepassword_connect_all_docs.3
+}
+
 resource "kubernetes_secret" "onepassword" {
   metadata {
     name = "1password"
@@ -10,102 +18,22 @@ resource "kubernetes_secret" "onepassword" {
   }
 }
 
-# TODO need TLS for this
-
-resource "kubernetes_deployment" "onepassword" {
-  metadata {
-    name = "1password"
-  }
-  spec {
-    revision_history_limit = 0
-    replicas = 1
-    selector {
-      match_labels = {
-        app = "1password"
-      }
-    }
-    template {
-      metadata {
-        labels = {
-          app = "1password"
-        }
-      }
-      spec {
-        container {
-          name = "1password-connect"
-          image = "1password/connect-api:1.5"
-          image_pull_policy = "IfNotPresent"
-          port {
-            container_port = 8081
-          }
-          volume_mount {
-            mount_path = "/home/opuser/.op/data"
-            name       = "1password-volume"
-          }
-          volume_mount {
-            mount_path = "/home/opuser/.op/creds"
-            name       = "1password-creds-secret-volume"
-          }
-          env {
-            name = "OP_HTTP_PORT"
-            value = "8081"
-          }
-          env {
-            name = "OP_SESSION"
-            value = "/home/opuser/.op/creds/credentials"
-          }
-        }
-        container {
-          name = "1password-sync"
-          image = "1password/connect-sync:1.5"
-          image_pull_policy = "IfNotPresent"
-          port {
-            container_port = 8080
-          }
-          volume_mount {
-            mount_path = "/home/opuser/.op/data"
-            name       = "1password-volume"
-          }
-          volume_mount {
-            mount_path = "/home/opuser/.op/creds"
-            name       = "1password-creds-secret-volume"
-          }
-          env {
-            name = "OP_SESSION"
-            value = "/home/opuser/.op/creds/credentials"
-          }
-        }
-        volume {
-          name = "1password-volume"
-          empty_dir {}
-        }
-        volume {
-          name = "1password-creds-secret-volume"
-          secret {
-            secret_name = kubernetes_secret.onepassword.metadata.0.name
-          }
-        }
-      }
-    }
-  }
+resource "kubernetes_manifest" "onepassword_connect_configmap" {
+  manifest = yamldecode(local.onepassword_connect_configmap_doc)
 }
 
-resource "kubernetes_service" "onepassword" {
-  metadata {
-    name = "onepassword-service"
-  }
-  spec {
-    # TODO maybe make this ClusterIP, then it won't need TLS
-    type = "NodePort"
-    selector = {
-      app = "1password"
-    }
-    port {
-      port = 8081
-      target_port = 8081
-      node_port = 30010
-    }
-  }
+resource "kubernetes_manifest" "onepassword_sync_configmap" {
+  manifest = yamldecode(local.onepassword_sync_configmap_doc)
+}
+
+# TODO maybe need TLS for this
+resource "kubernetes_manifest" "onepassword_connect_sync_deployment" {
+  depends_on = [kubernetes_secret.onepassword]
+  manifest = yamldecode(local.onepassword_connect_sync_deployment_doc)
+}
+
+resource "kubernetes_manifest" "onepassword_connect_service" {
+  manifest = yamldecode(local.onepassword_connect_service_doc)
 }
 
 resource "kubernetes_config_map" "onepassword_operator" {
