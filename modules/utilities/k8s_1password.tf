@@ -47,3 +47,7 @@ resource "kubernetes_manifest" "onepassword_connect_operator_config" {
 resource "kubernetes_manifest" "onepassword_connect_operator_deployment" {
   manifest = yamldecode(local.onepassword_operator_deployment_doc)
 }
+
+resource "kubernetes_manifest" "secret_mongodb_root_account" {
+  manifest = yamldecode(file("${path.module}/k8s_yaml/1password/1password_secret_values.yml"))
+}
