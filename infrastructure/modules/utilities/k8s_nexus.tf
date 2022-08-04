@@ -6,9 +6,13 @@ locals {
   nexus_service_doc = local.nexus_all_docs.1
 }
 
-#resource "docker_image" "" {
-#  name = ""
-#}
+resource "docker_image" "extended_busybox" {
+  name = "extended-busybox"
+  build {
+    path = "./docker"
+    dockerfile = "ExtendedBusyBox_Dockerfile"
+  }
+}
 
 resource "kubernetes_manifest" "nexus_deployment" {
   manifest = yamldecode(local.nexus_deployment_doc)
