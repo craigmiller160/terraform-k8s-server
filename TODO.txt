@@ -1,4 +1,3 @@
-Refactor to Use YAML For K8s
 Certs to 1Password
 Nexus
 Git Hook for Linting
