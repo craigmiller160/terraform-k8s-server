@@ -21,10 +21,17 @@ spec:
           args:
             - -c
             - >-
-              chown -R 200:200 /nexus-data
+              chown -R 200:200 /nexus-data &&
+              cat /secret-certs/key | base64 -d > /secret-certs/key-decoded &&
+              cat /secret-certs/cert | base64 -d > /secret-certs/cert-decoded &&
+              openssl pkcs12 -export -out /certs/nexus.p12 -inkey /secret-certs/key-decoded -in /secret-certs/cert-decoded
           volumeMounts:
             - mountPath: /nexus-data
               name: nexus-data-volume
+            - mountPath: /secret-certs
+              name: nexus-secret-certs-volume
+            - mountPath: /certs
+              name: nexus-certs-volume
 #            - mountPath: /nexus-jetty
 #              name: nexus-jetty-volume
       containers:
@@ -49,6 +56,12 @@ spec:
         - name: nexus-data-volume
           hostPath:
             path: /opt/kubernetes/data/nexus/data
+        - name: nexus-secret-certs-volume
+          secret:
+            secretName: craigmiller160-tls-certs
+        - name: nexus-certs-volume
+          emptyDir: {}
+
 #        - name: nexus-jetty-volume
 #          hostPath:
 #            path: /opt/kubernetes/data/nexus/jetty
