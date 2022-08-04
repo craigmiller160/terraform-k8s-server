@@ -53,7 +53,6 @@ All node ports must be exposed via a mapping in the `kind-config.yml`. Otherwise
 All secrets need to be stored in a file called `secrets.tfvars` at the root of the project. It should look like this:
 
 ```hcl
-postgres_root_password = "####"
 database_cert = "####"
 database_key = "####"
 ```
