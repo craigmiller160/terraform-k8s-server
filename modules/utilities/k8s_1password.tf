@@ -140,7 +140,7 @@ resource "kubernetes_deployment" "onepassword_operator" {
         }
       }
       spec {
-        service_account_name = "onepassword-operator"
+        service_account_name = "onepassword-connect-operator"
         container {
           name = "onepassword-operator"
           image = "1password/onepassword-operator:1.5"
