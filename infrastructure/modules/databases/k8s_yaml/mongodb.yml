@@ -16,6 +16,8 @@ metadata:
 spec:
   revisionHistoryLimit: 0
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: mongodb
