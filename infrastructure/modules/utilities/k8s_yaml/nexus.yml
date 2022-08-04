@@ -29,7 +29,7 @@ spec:
 #              name: nexus-jetty-volume
       containers:
         - name: nexus
-          image: klo2k/nexus3:3.29.2-02
+          image: %NEXUS_IMAGE%
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8081
