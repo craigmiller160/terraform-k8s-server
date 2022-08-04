@@ -17,11 +17,11 @@ spec:
         - name: setup
           image: busybox:1.28
           imagePullPolicy: IfNotPresent
-          command: [
-            "sh",
-            "-c",
-            "chown -R 200:200 /nexus-data"
-          ]
+          command: ["/bin/sh"]
+          args:
+            - -c
+            - >-
+              chown -R 200:200 /nexus-data
           volumeMounts:
             - mountPath: /nexus-data
               name: nexus-data-volume
