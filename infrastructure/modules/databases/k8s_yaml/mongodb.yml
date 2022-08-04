@@ -63,6 +63,20 @@ spec:
                 secretKeyRef:
                   name: mongodb-root-account
                   key: password
+          volumeMounts:
+            - mountPath: /data/db
+              name: mongodb-volume
+            - mountPath: /certs
+              name: mongodb-certs-volume
+      volumes:
+        - name: mongodb-volume
+          hostPath:
+            path: /opt/kubernetes/data/mongodb
+        - name: mongodb-certs-volume
+          emptyDir: {}
+        - name: mongodb-certs-secret-volume
+          secret:
+            secretName: database-tls-certs
 ---
 apiVersion: v1
 kind: Service
