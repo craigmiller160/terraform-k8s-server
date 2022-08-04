@@ -35,11 +35,9 @@ spec:
         - name: nexus-data-volume
           hostPath:
             path: /opt/kubernetes/data/nexus/data
-            type: Directory
         - name: nexus-jetty-volume
           hostPath:
             path: /opt/kubernetes/data/nexus/jetty
-            type: Directory
 
 ---
 apiVersion: v1
