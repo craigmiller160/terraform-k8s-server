@@ -14,6 +14,7 @@ locals {
   onepassword_secret_values_mongodb_root_account_doc = local.onepassword_secret_values_all_docs.0
   onepassword_secret_values_postgres_root_account_doc = local.onepassword_secret_values_all_docs.1
   onepassword_secret_values_database_tls_doc = local.onepassword_secret_values_all_docs.2
+  onepassword_secret_values_craigmiller160_tls_doc = local.onepassword_secret_values_all_docs.3
 }
 
 resource "kubernetes_secret" "onepassword" {
@@ -62,4 +63,8 @@ resource "kubernetes_manifest" "secret_postgres_root_account" {
 
 resource "kubernetes_manifest" "secret_database_tls_certs" {
   manifest = yamldecode(local.onepassword_secret_values_database_tls_doc)
+}
+
+resource "kubernetes_manifest" "secret_craigmiller160_tls_certs" {
+  manifest = yamldecode(local.onepassword_secret_values_craigmiller160_tls_doc)
 }
