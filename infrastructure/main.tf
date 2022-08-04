@@ -3,11 +3,22 @@ terraform {
     secret_suffix = "infrastructure-state"
     config_path   = "~/.kube/config"
   }
+
+  required_providers {
+    docker = {
+      source  = "kreuzwerker/docker"
+      version = "2.20.0"
+    }
+  }
 }
 
 provider "kubernetes" {
   config_path    = "~/.kube/config"
   config_context = var.k8s_context
+}
+
+provider "docker" {
+  host = "unix:///var/run/docker.sock"
 }
 
 module "databases" {
