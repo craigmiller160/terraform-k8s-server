@@ -11,7 +11,7 @@ provider "kubernetes" {
 }
 
 module "databases" {
-  source                 = "modules/databases"
+  source                 = "./modules/databases"
   postgres_root_password = var.postgres_root_password
   mongodb_root_password  = var.mongodb_root_password
   database_cert          = var.database_cert
@@ -19,7 +19,7 @@ module "databases" {
 }
 
 module "utilities" {
-  source = "modules/utilities"
+  source = "./modules/utilities"
   onepassword_creds = var.onepassword_creds
   onepassword_token = var.onepassword_token
 }

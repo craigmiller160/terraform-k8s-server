@@ -2,17 +2,26 @@
 
 # TODO change arguments order, put all terraform commands at end
 
+# -var-file="secrets.tfvars"
+
 function run_for_env {
   backend_arg=""
+  var_file=""
+
   if [ $1 == "init" ]; then
     backend_arg="-backend-config=config_context=$2"
+  fi
+
+  if [ -f "$3/secrets.tfvars" ]; then
+    var_file="-var-file=secrets.tfvars"
   fi
 
   (
     cd "$3" &&
     terraform $1 \
         -var="k8s_context=$2" \
-        $backend_arg
+        $backend_arg \
+        $var_file
   )
 }
 
