@@ -16,7 +16,7 @@ resource "docker_image" "extended_busybox" {
 }
 
 resource "kubernetes_manifest" "nexus_deployment" {
-  depends_on = [docker_image.extended_busybox]
+#  depends_on = [docker_image.extended_busybox]
   manifest = yamldecode(local.nexus_deployment_doc)
 }
 
