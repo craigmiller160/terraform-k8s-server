@@ -1,7 +1,3 @@
-#data "onepassword_service_account" "documents" {
-#  content = split()
-#}
-
 locals {
   all_service_account_docs = split("---", file("${path.module}/k8s_yaml/1password_provided/1password_service_account.yml"))
   service_account_doc = local.all_service_account_docs.0
