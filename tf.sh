@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# TODO change arguments order, put all terraform commands at end
+
 function run_for_env {
   backend_arg=""
   if [ $1 == "init" ]; then
