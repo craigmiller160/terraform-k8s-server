@@ -1,6 +1,6 @@
 
 locals {
-  onepassword_connect_all_docs = split(file("${path.module}/k8s_yaml/1password/1password_connect.yml"))
+  onepassword_connect_all_docs = split("---", file("${path.module}/k8s_yaml/1password/1password_connect.yml"))
   onepassword_connect_configmap_doc = local.onepassword_connect_all_docs.0
   onepassword_sync_configmap_doc = local.onepassword_connect_all_docs.1
   onepassword_connect_sync_deployment_doc = local.onepassword_connect_all_docs.2
