@@ -31,7 +31,7 @@ spec:
           command: [
             "sh",
             "-c",
-            "cat /certs-secret/tls.crt > /certs/mongodb.pem && cat /certs-secret/tls.key >> /certs/mongodb.pem"
+            "cat /certs-secret/cert | base64 -d > /certs/mongodb.pem && cat /certs-secret/key | base64 -d >> /certs/mongodb.pem"
           ]
           volumeMounts:
             - mountPath: /certs-secret
