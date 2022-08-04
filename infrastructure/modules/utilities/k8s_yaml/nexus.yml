@@ -15,7 +15,7 @@ spec:
     spec:
       initContainers:
         - name: setup
-          image: busybox:1.28
+          image: nginx:1.23.1
           imagePullPolicy: IfNotPresent
           command: ["/bin/sh"]
           args:
