@@ -49,5 +49,6 @@ resource "kubernetes_manifest" "onepassword_connect_operator_deployment" {
 }
 
 resource "kubernetes_manifest" "secret_mongodb_root_account" {
+  depends_on = [kubernetes_manifest.onepassword_provided_item]
   manifest = yamldecode(file("${path.module}/k8s_yaml/1password/1password_secret_values.yml"))
 }
