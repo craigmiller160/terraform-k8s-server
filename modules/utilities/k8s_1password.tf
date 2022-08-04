@@ -108,131 +108,67 @@ resource "kubernetes_service" "onepassword" {
   }
 }
 
-#resource "kubernetes_service_account" "onepassword_operator" {
-#  metadata {
-#    name = "onepassword-operator"
-#  }
-#}
-#
-#resource "kubernetes_cluster_role_binding" "onepassword_operator" {
-#  metadata {
-#    name = "onepassword-operator-default"
-##    namespace = "default"
-#  }
-#  role_ref {
-#    api_group = "rbac.authorization.k8s.io"
-#    kind      = "ClusterRole"
-#    name      = "onepassword-operator"
-#  }
-#  subject {
-#    kind = "ServiceAccount"
-#    name = "onepassword-operator"
-#  }
-#}
-#
-#resource "kubernetes_cluster_role" "onepassword_operator" {
-#  metadata {
-#    name = "onepassword-operator"
-#  }
-#  rule {
-#    api_groups = [""]
-#    resources = ["pods", "services", "services/finalizers", "endpoints", "persistentvolumeclaims", "events", "configmaps", "secrets", "namespaces"]
-#    verbs = ["create", "delete", "get", "list", "patch", "update", "watch"]
-#  }
-#  rule {
-#    api_groups = ["apps"]
-#    resources = ["deployments", "daemonsets", "replicasets", "statefulsets"]
-#    verbs = ["create", "delete", "get", "list", "patch", "update", "watch"]
-#  }
-#  rule {
-#    api_groups = ["monitoring.coreos.com"]
-#    resources = ["servicemonitors"]
-#    verbs = ["get", "create"]
-#  }
-#  rule {
-#    api_groups = ["apps"]
-#    resource_names = ["onepassword-operator"]
-#    resources = ["deployments/finalizers"]
-#    verbs = ["update"]
-#  }
-#  rule {
-#    api_groups = [""]
-#    resources = ["pods"]
-#    verbs = ["get"]
-#  }
-#  rule {
-#    api_groups = ["apps"]
-#    resources = ["replicasets", "deployments"]
-#    verbs = ["get"]
-#  }
-#  rule {
-#    api_groups = ["onepassword.com"]
-#    resources = ["*"]
-#    verbs = ["create", "delete", "get", "list", "patch", "update", "watch"]
-#  }
-#}
-#
-#resource "kubernetes_config_map" "onepassword_operator" {
-#  metadata {
-#    name = "onepassword-operator"
-#  }
-#  data = {
-#    WATCH_NAMESPACE = "default"
-#    OPERATOR_NAME = "onepassword-operator"
-#    OP_CONNECT_HOST = "http://onepassword-service:8081"
-#    POLLING_INTERVAL = "10"
-#    AUTO_RESTART = "false"
-#  }
-#}
+resource "kubernetes_config_map" "onepassword_operator" {
+  metadata {
+    name = "onepassword-operator"
+  }
+  data = {
+    WATCH_NAMESPACE = "default"
+    OPERATOR_NAME = "onepassword-operator"
+    OP_CONNECT_HOST = "http://onepassword-service:8081"
+    POLLING_INTERVAL = "10"
+    AUTO_RESTART = "false"
+  }
+}
 
-#resource "kubernetes_deployment" "onepassword_operator" {
-#  metadata {
-#    name = "onepassword-operator"
-#  }
-#  spec {
-#    revision_history_limit = 0
-#    replicas = 1
-#    selector {
-#      match_labels = {
-#        name = "onepassword-operator"
-#      }
-#    }
-#    template {
-#      metadata {
-#        labels = {
-#          name = "onepassword-operator"
-#        }
-#      }
-#      spec {
-#        service_account_name = "onepassword-operator"
-#        container {
-#          name = "onepassword-operator"
-#          image = "1password/onepassword-operator:1.5"
-#          command = ["/manager"]
-#          env_from {
-#            config_map_ref {
-#              name = kubernetes_config_map.onepassword_operator.metadata.0.name
-#            }
-#          }
-#          env {
-#            name = "POD_NAME"
-#            value_from {
-#              field_ref {
-#                field_path = "metadata.name"
-#              }
-#            }
-#          }
-#          env {
-#            name = "OP_CONNECT_TOKEN"
-#            value_from {
-#              secret_key_ref {
-#                name = "1password"
-#                key = "token"
-#              }
-#            }
-#          }
-#        }
-#      }
-#    }
-#  }
-#}
+resource "kubernetes_deployment" "onepassword_operator" {
+  metadata {
+    name = "onepassword-operator"
+  }
+  spec {
+    revision_history_limit = 0
+    replicas = 1
+    selector {
+      match_labels = {
+        name = "onepassword-operator"
+      }
+    }
+    template {
+      metadata {
+        labels = {
+          name = "onepassword-operator"
+        }
+      }
+      spec {
+        service_account_name = "onepassword-operator"
+        container {
+          name = "onepassword-operator"
+          image = "1password/onepassword-operator:1.5"
+          command = ["/manager"]
+          env_from {
+            config_map_ref {
+              name = kubernetes_config_map.onepassword_operator.metadata.0.name
+            }
+          }
+          env {
+            name = "POD_NAME"
+            value_from {
+              field_ref {
+                field_path = "metadata.name"
+              }
+            }
+          }
+          env {
+            name = "OP_CONNECT_TOKEN"
+            value_from {
+              secret_key_ref {
+                name = "1password"
+                key = "token"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
