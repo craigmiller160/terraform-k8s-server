@@ -12,8 +12,6 @@ provider "kubernetes" {
 
 module "databases" {
   source                 = "./modules/databases"
-  database_cert          = var.database_cert
-  database_key           = var.database_key
 }
 
 module "utilities" {
