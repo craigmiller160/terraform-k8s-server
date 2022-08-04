@@ -34,7 +34,6 @@ resource "kubernetes_manifest" "onepassword_sync_config" {
   manifest = yamldecode(local.onepassword_sync_configmap_doc)
 }
 
-# TODO maybe need TLS for this
 resource "kubernetes_manifest" "onepassword_connect_sync_deployment" {
   depends_on = [kubernetes_secret.onepassword]
   manifest = yamldecode(local.onepassword_connect_sync_deployment_doc)
