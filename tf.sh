@@ -26,8 +26,8 @@ function parse_args {
   case $2 in
     "dev") context="kind-kind" ;;
     "prod") context="microk8s" ;;
-    "*")
-      echo "Invalid environment"
+    *)
+      echo "Invalid environment: $2"
       exit 1
     ;;
   esac
@@ -35,7 +35,7 @@ function parse_args {
   case $3 in
     "") directory="infrastructure" ;;
     "--pre") directory="pre_infrastructure" ;;
-    "*")
+    *)
       echo "Invalid argument: $3"
       exit 1
     ;;
