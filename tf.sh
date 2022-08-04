@@ -3,7 +3,7 @@
 function run_for_env {
   backend_arg=""
   if [ $1 == "init" ]; then
-    backend_arg="-backend-config='config_context=$2'"
+    backend_arg="-backend-config=config_context=$2"
   fi
 
   (
