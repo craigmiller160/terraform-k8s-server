@@ -9,6 +9,10 @@ locals {
   onepassword_operator_all_docs = split("---", file("${path.module}/k8s_yaml/1password/1password_operator.yml"))
   onepassword_operator_configmap_doc = local.onepassword_operator_all_docs.0
   onepassword_operator_deployment_doc = local.onepassword_operator_all_docs.1
+
+  onepassword_secret_values_all_docs = split("---", file("${path.module}/k8s_yaml/1password/1password_secret_values.yml"))
+  onepassword_secret_values_mongodb_root_account_doc = local.onepassword_secret_values_all_docs.0
+  onepassword_secret_values_postgres_root_account_doc = local.onepassword_secret_values_all_docs.1
 }
 
 resource "kubernetes_secret" "onepassword" {
@@ -49,5 +53,9 @@ resource "kubernetes_manifest" "onepassword_connect_operator_deployment" {
 }
 
 resource "kubernetes_manifest" "secret_mongodb_root_account" {
-  manifest = yamldecode(file("${path.module}/k8s_yaml/1password/1password_secret_values.yml"))
+  manifest = yamldecode(local.onepassword_secret_values_mongodb_root_account_doc)
+}
+
+resource "kubernetes_manifest" "secret_postgres_root_account" {
+  manifest = yamldecode(local.onepassword_secret_values_postgres_root_account_doc)
 }
