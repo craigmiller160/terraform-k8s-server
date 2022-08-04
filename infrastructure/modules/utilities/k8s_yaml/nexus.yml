@@ -24,7 +24,7 @@ spec:
               chown -R 200:200 /nexus-data &&
               cat /secret-certs/key | base64 -d > /certs/key-decoded &&
               cat /secret-certs/cert | base64 -d > /certs/cert-decoded &&
-              openssl pkcs12 -export -out /certs/nexus.p12 -inkey /certs/key-decoded -in /certs/cert-decoded
+              openssl pkcs12 -export -out /certs/nexus.p12 -inkey /certs/key-decoded -in /certs/cert-decoded -password pass:password
           volumeMounts:
             - mountPath: /nexus-data
               name: nexus-data-volume
