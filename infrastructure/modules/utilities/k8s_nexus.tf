@@ -10,7 +10,7 @@ resource "docker_image" "extended_busybox" {
   name = "extended-busybox"
   build {
     path = "${path.module}/docker"
-    tag = ["extended-busybox:1.0"]
+    tag = ["192.168.7.232:3200/extended-busybox:1.1"]
     dockerfile = "ExtendedBusyBox_Dockerfile"
   }
 }
