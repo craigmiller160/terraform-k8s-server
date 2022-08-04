@@ -6,6 +6,6 @@ if [ $1 == "init" ]; then
 fi
 
 terraform $@ \
-  -var="k8s_context=kind" \
+  -var="k8s_context=kind-kind" \
   -var-file="secrets.tfvars" \
   $backend_arg

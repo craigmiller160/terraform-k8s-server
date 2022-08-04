@@ -1,11 +1,8 @@
 #!/bin/bash
 
-directory=""
-env=""
+function run_for_env {
 
-#function run_for_env {
-#
-#}
+}
 
 function parse_args {
   if [ $# -lt 1 ]; then
@@ -13,7 +10,17 @@ function parse_args {
     exit 1
   fi
 
-  env="$1"
+  directory="infrastructure"
+  context=""
+
+  case $1 in
+    "dev") context="kind-kind" ;;
+    "prod") context="microk8s" ;;
+    "*")
+      echo "Invalid environment"
+      exit 1
+    ;;
+  esac
 
   if [ $2 != "" ]; then
     case $2 in
@@ -24,6 +31,8 @@ function parse_args {
       ;;
     esac
   fi
+
+  run_for_env "$context" "$directory"
 }
 
 parse_args $@
