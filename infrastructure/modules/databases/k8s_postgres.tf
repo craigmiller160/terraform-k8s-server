@@ -1,22 +1,3 @@
-resource "kubernetes_config_map" "postgres" {
-  metadata {
-    name = "postgres-config"
-  }
-  data = {
-    POSTGRES_USER = "postgres_root"
-  }
-}
-
-resource "kubernetes_secret" "postgres_root_password" {
-  metadata {
-    name = "postgres-root-password"
-  }
-
-  data = {
-    POSTGRES_ROOT_PASSWORD = var.postgres_root_password
-  }
-}
-
 resource "kubernetes_deployment" "postgres" {
   metadata {
     name = "postgres"
@@ -69,17 +50,21 @@ resource "kubernetes_deployment" "postgres" {
           port {
             container_port = 5432
           }
-          env_from {
-            config_map_ref {
-              name = kubernetes_config_map.postgres.metadata.0.name
+          env {
+            name = "POSTGRES_USER"
+            value_from {
+              secret_key_ref {
+                name = "postgres-root-account"
+                key = "username"
+              }
             }
           }
           env {
             name = "POSTGRES_PASSWORD"
             value_from {
               secret_key_ref {
-                name = kubernetes_secret.postgres_root_password.metadata.0.name
-                key  = "POSTGRES_ROOT_PASSWORD"
+                name = "postgres-root-account"
+                key  = "password"
               }
             }
           }
