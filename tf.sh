@@ -2,24 +2,22 @@
 
 # TODO change arguments order, put all terraform commands at end
 
-# -var-file="secrets.tfvars"
-
 function run_for_env {
   backend_arg=""
   var_file=""
 
-  if [ $1 == "init" ]; then
-    backend_arg="-backend-config=config_context=$2"
+  if [ $3 == "init" ]; then
+    backend_arg="-backend-config=config_context=$1"
   fi
 
-  if [ -f "$3/secrets.tfvars" ]; then
+  if [ -f "$2/secrets.tfvars" ]; then
     var_file="-var-file=secrets.tfvars"
   fi
 
   (
-    cd "$3" &&
-    terraform $1 \
-        -var="k8s_context=$2" \
+    cd "$2" &&
+    terraform ${@:3} \
+        -var="k8s_context=$1" \
         $backend_arg \
         $var_file
   )
@@ -27,32 +25,37 @@ function run_for_env {
 
 function parse_args {
   if [ $# -lt 2 ]; then
-    echo "Must specify environment"
+    echo "Must specify environment & terraform command"
     exit 1
   fi
 
   directory="infrastructure"
   context=""
 
-  case $2 in
-    "dev") context="kind-kind" ;;
-    "prod") context="microk8s" ;;
+  case $1 in
+    "pre-dev")
+      context="kind-kind"
+      directory="pre_infrastructure"
+    ;;
+    "pre-prod")
+      context="microk8s"
+      directory="pre_infrastructure"
+    ;;
+    "dev")
+      context="kind-kind"
+      directory="infrastructure"
+    ;;
+    "prod")
+      context="microk8s"
+      directory="infrastructure"
+    ;;
     *)
       echo "Invalid environment: $2"
       exit 1
     ;;
   esac
 
-  case $3 in
-    "") directory="infrastructure" ;;
-    "--pre") directory="pre_infrastructure" ;;
-    *)
-      echo "Invalid argument: $3"
-      exit 1
-    ;;
-  esac
-
-  run_for_env "$1" "$context" "$directory"
+  run_for_env "$context" "$directory" ${@:2}
 }
 
 parse_args $@
