@@ -1,5 +1,4 @@
 Refactor to Use YAML For K8s
 Nexus
-1Password Secrets
 Git Hook for Linting
 Let's Encrypt
