@@ -7,7 +7,7 @@ function run_for_env {
   fi
 
   (
-    cd "$2" &&
+    cd "$3" &&
     terraform $1 \
         -var="k8s_context=$2" \
         $backend_arg
@@ -32,15 +32,14 @@ function parse_args {
     ;;
   esac
 
-  if [ $1 != "" ]; then
-    case $2 in
-      "--pre") directory="pre_infrastructure" ;;
-      "*")
-        echo "Invalid argument: $2"
-        exit 1
-      ;;
-    esac
-  fi
+  case $3 in
+    "") directory="infrastructure" ;;
+    "--pre") directory="pre_infrastructure" ;;
+    "*")
+      echo "Invalid argument: $3"
+      exit 1
+    ;;
+  esac
 
   run_for_env "$1" "$context" "$directory"
 }
