@@ -9,14 +9,14 @@ locals {
 resource "docker_image" "extended_busybox" {
   name = "extended-busybox"
   build {
-    path = "./docker"
+    path = "${path.module}/docker"
     tag = ["extended-busybox:1.0"]
     dockerfile = "ExtendedBusyBox_Dockerfile"
   }
 }
 
 resource "kubernetes_manifest" "nexus_deployment" {
-#  depends_on = [docker_image.extended_busybox]
+  depends_on = [docker_image.extended_busybox]
   manifest = yamldecode(local.nexus_deployment_doc)
 }
 
