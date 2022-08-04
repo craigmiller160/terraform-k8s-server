@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# TODO change arguments order, put all terraform commands at end
-
 function run_for_env {
   backend_arg=""
   var_file=""
