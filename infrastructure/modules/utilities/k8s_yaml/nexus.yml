@@ -13,6 +13,20 @@ spec:
       labels:
         app: nexus
     spec:
+      initContainers:
+        - name: setup
+          image: busybox:1.28
+          imagePullPolicy: IfNotPresent
+          command: [
+            "sh",
+            "-c",
+            "chown -R 200 /nexus-data && chown -R 200 /nexus-jetty"
+          ]
+          volumeMounts:
+            - mountPath: /nexus-data
+              name: nexus-data-volume
+            - mountPath: /nexus-jetty
+              name: nexus-jetty-volume
       containers:
         - name: nexus
           image: sonatype/nexus3:3.29.2
