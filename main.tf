@@ -3,6 +3,12 @@ terraform {
     secret_suffix = "state"
     config_path   = "~/.kube/config"
   }
+  required_providers {
+    onepassword = {
+      source = "1password/onepassword"
+      version = "~>1.1.2"
+    }
+  }
 }
 
 provider "kubernetes" {
