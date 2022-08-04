@@ -1,4 +1,3 @@
-Certs to 1Password
 Nexus
 Git Hook for Linting
 Let's Encrypt
