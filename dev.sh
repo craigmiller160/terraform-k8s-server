@@ -2,7 +2,7 @@
 
 backend_arg=""
 if [ $1 == "init" ]; then
-  backend_arg = "-backend-config='config_context=kind'"
+  backend_arg = "-backend-config='config_context=kind-kind'"
 fi
 
 terraform $@ \

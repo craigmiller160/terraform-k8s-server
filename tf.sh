@@ -1,11 +1,21 @@
 #!/bin/bash
 
 function run_for_env {
+  backend_arg=""
+  if [ $1 == "init" ]; then
+    backend_arg="-backend-config='config_context=$2'"
+  fi
 
+  (
+    cd "$2" &&
+    terraform $1 \
+        -var="k8s_context=$2" \
+        $backend_arg
+  )
 }
 
 function parse_args {
-  if [ $# -lt 1 ]; then
+  if [ $# -lt 2 ]; then
     echo "Must specify environment"
     exit 1
   fi
@@ -13,7 +23,7 @@ function parse_args {
   directory="infrastructure"
   context=""
 
-  case $1 in
+  case $2 in
     "dev") context="kind-kind" ;;
     "prod") context="microk8s" ;;
     "*")
@@ -22,7 +32,7 @@ function parse_args {
     ;;
   esac
 
-  if [ $2 != "" ]; then
+  if [ $1 != "" ]; then
     case $2 in
       "--pre") directory="pre_infrastructure" ;;
       "*")
@@ -32,7 +42,7 @@ function parse_args {
     esac
   fi
 
-  run_for_env "$context" "$directory"
+  run_for_env "$1" "$context" "$directory"
 }
 
 parse_args $@
