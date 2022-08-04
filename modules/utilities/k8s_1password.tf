@@ -9,7 +9,7 @@ locals {
 
 resource "kubernetes_secret" "onepassword" {
   metadata {
-    name = "1password"
+    name = "onepassword"
   }
 
   data = {
