@@ -24,7 +24,8 @@ provider "kubernetes" {
 provider "docker" {
   host = "unix:///var/run/docker.sock"
   registry_auth {
-    address = "192.168.7.232:3200"
+    # TODO this is only for dev here
+    address = "localhost:5000"
   }
 }
 
