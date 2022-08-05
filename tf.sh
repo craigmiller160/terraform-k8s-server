@@ -32,7 +32,7 @@ function parse_args {
 
   case $1 in
     "pre-dev")
-      context="kind-kind"
+      context="minikube"
       directory="pre_infrastructure"
     ;;
     "pre-prod")
@@ -40,7 +40,7 @@ function parse_args {
       directory="pre_infrastructure"
     ;;
     "dev")
-      context="kind-kind"
+      context="minikube"
       directory="infrastructure"
     ;;
     "prod")
