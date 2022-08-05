@@ -26,6 +26,8 @@ provider "docker" {
   registry_auth {
     # TODO this is only for dev here
     address = "localhost:5000"
+    username = ""
+    password = ""
   }
 }
 
