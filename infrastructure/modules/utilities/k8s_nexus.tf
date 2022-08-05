@@ -7,7 +7,7 @@ locals {
 }
 
 resource "docker_registry_image" "extended_busybox" {
-  name = "192.168.7.232:3200/extended-busybox:1.1"
+  name = "localhost:5000/extended-busybox:1.1"
   build {
     context = "${path.module}/docker"
     dockerfile = "ExtendedBusyBox_Dockerfile"
