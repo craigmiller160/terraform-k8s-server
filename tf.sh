@@ -37,7 +37,7 @@ function parse_args {
 
   case $1 in
     "pre-dev")
-      context="minikube"
+      context="kind-kind"
       directory="pre_infrastructure"
       nexus_image=$dev_nexus_image
     ;;
@@ -47,7 +47,7 @@ function parse_args {
       nexus_image=$prod_nexus_image
     ;;
     "dev")
-      context="minikube"
+      context="kind-kind"
       directory="infrastructure"
       nexus_image=$dev_nexus_image
     ;;
