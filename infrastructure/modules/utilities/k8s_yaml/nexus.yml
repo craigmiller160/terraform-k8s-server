@@ -1,3 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nexus-config
+  namespace: default
+data:
+  NEXUS_SECURITY_RANDOMPASSWORD: false
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
