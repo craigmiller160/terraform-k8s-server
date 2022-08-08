@@ -4,5 +4,7 @@ Nexus
 Ingress
     - With TLS
     - With Automated Let's Encrypt Renewel
+Integrate Nexus With Ingress
+    - Remove Nexus TLS if possible
 Git Hook for Linting
 Let's Encrypt
