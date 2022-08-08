@@ -1,4 +1,8 @@
-Figure out how to push containers to MicroK8s
 Nexus
+    - Get Nexus Admin Password
+    - Configure Nexus
+Ingress
+    - With TLS
+    - With Automated Let's Encrypt Renewel
 Git Hook for Linting
 Let's Encrypt
