@@ -49,6 +49,9 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8081
+          envFrom:
+            - configMapRef:
+                name: nexus-config
           volumeMounts:
             - mountPath: /nexus-data
               name: nexus-data-volume
