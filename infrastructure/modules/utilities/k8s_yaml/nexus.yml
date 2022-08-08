@@ -15,16 +15,17 @@ spec:
     spec:
       initContainers:
         - name: setup
-          image: extended-busybox:1.0
+          image: alpine:3.15.5
           imagePullPolicy: IfNotPresent
           command: ["/bin/sh"]
           args:
             - -c
             - >-
               chown -R 200:200 /nexus-data &&
+              apk add openssl &&
               cat /secret-certs/key | base64 -d > /certs/key-decoded &&
               cat /secret-certs/cert | base64 -d > /certs/cert-decoded &&
-              /openssl pkcs12 -export -out /certs/nexus.p12 -inkey /certs/key-decoded -in /certs/cert-decoded -password pass:password
+              openssl pkcs12 -export -out /certs/nexus.p12 -inkey /certs/key-decoded -in /certs/cert-decoded -password pass:password
           volumeMounts:
             - mountPath: /nexus-data
               name: nexus-data-volume
