@@ -29,7 +29,7 @@ spec:
           args:
             - -c
             - >-
-              chown -R 200:200 /nexus-data &&
+              chown -R 200:200 /nexus-data
 #              apk add openssl &&
 #              cat /secret-certs/key | base64 -d > /certs/key-decoded &&
 #              cat /secret-certs/cert | base64 -d > /certs/cert-decoded &&
