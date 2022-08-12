@@ -1,4 +1,4 @@
-# Port Forwarding
+# Setup Port Forwarding
 
 It is critically important that the home internet be setup to forward the following ports. This explains how the ports will be forwarded from the production machine to the public internet.
 

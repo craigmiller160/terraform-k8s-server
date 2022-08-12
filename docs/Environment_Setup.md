@@ -1,4 +1,4 @@
-# Kubernetes Environment Setup
+# Setup Kubernetes Environment
 
 There are manual steps necessary for setting up the Dev & Prod environments before they will be able to interact with Terraform. This guide covers those steps.
 
