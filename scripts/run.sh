@@ -59,4 +59,13 @@ function run {
   backend_arg=$(get_backend_context $3)
   secrets_file=$(get_secrets_file $2)
   nexus_image_var=$(get_nexus_image_var $2)
+
+  (
+    cd "$2" &&
+    terraform ${@:3} \
+      -var="k8s_context=$k8s_context" \
+      $backend_arg \
+      $secrets_file \
+      $nexus_image_var
+  )
 }
