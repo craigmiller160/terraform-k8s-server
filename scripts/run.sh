@@ -2,8 +2,8 @@
 # $1 = env
 function get_env {
   case $1 in
-    "dev") source ./.dev.env ;;
-    "prod") source ./.prod.env ;;
+    "dev") source ./scripts/.dev.env ;;
+    "prod") source ./scripts/.prod.env ;;
     *)
       echo "Invalid environment: $1"
       exit 1
@@ -16,6 +16,7 @@ function validate_phase {
   case $1 in
     "phase1"|"phase2"|"phase3")
       echo "Infrastructure phase: $1"
+    ;;
     *)
       echo "Invalid infrastructure phase: $1"
       exit 1
@@ -51,7 +52,7 @@ function get_nexus_image_var {
 }
 
 # $1 = env, $2 = Directory, #3 = Command
-export function run {
+function run {
   get_env $1
   validate_phase $2
 
