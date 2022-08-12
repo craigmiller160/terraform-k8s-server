@@ -5,6 +5,7 @@ This is the Terraform-driven setup for my Kubernetes Server.
 ## Table of Contents
 
 1. [Kubernetes Environment Setup](./docs/Environment_Setup.md)
+2. [Setup SSH Access to Prod Machine](./docs/Setup_SSH_to_Prod.md)
 
 # TODO everything below here is old
 
