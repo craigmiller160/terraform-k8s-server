@@ -1,6 +1,3 @@
-Nexus
-    - Get Nexus Admin Password
-    - Configure Nexus
 Ingress
     - With TLS
     - With Automated Let's Encrypt Renewel
