@@ -6,11 +6,19 @@ There are manual steps necessary for setting up the Dev & Prod environments befo
 
 1. [Dev Environment](#dev-environment)
 2. [Prod Environment](#prod-environment)
-3. [Kubectl - Switching Between Environments](#kubectl---switching-between-environments)
+3. [Switching Between Environments](#switching-between-environments)
 
 ## Dev Environment
 
 The dev environment is a much more limited Kubernetes cluster that can run on a dev machine and experiment with changes before deploying them to the final cluster. The expectation is that the development machine will be a MacOS device.
+
+### Install Kubectl
+
+The Kubernetes `kubectl` tool needs to be installed on the dev machine. It can be done so with this command:
+
+```bash
+brew install kubernetes-cli
+```
 
 ### Install Kind
 
@@ -32,11 +40,11 @@ kind create cluster --config=./kind-config.yml
 
 ## Prod Environment
 
-The production environment will run on my home Ubuntu machine and use MicroK8s as the Kubernetes provider. Here are the steps to set it up. Please note that unless specified otherwise, these steps must be performed on the Ubuntu machine.
+The production environment will run on my home Ubuntu machine and use MicroK8s as the Kubernetes provider. Here are the steps to set it up.
 
 ### Install & Configure MicroK8s
 
-MicroK8s must be installed on the machine. The Snap tool is required to do so.
+MicroK8s must be installed on the Ubuntu machine. The Snap tool is required to do so. All of these steps must be executed on the Ubuntu production machine.
 
 ```bash
 sudo snap install microk8s --classic --channel=1.24
@@ -65,9 +73,35 @@ Lastly, add `kubectl` auto-completion to the machine's bash setup file:
 source <(kubectl completion bash)
 ```
 
+### Allow Dev Machine to Access Prod Machine
 
+On the dev machine, once `kubectl` is installed, there either will be a `~/.kube/config` file, or it needs to be created. Either way, the following changes must be made. There are some values that must be retrieved from the production Ubuntu machine. Those values can be found at the exact same paths in an identically-formatted yaml file at `/var/snap/microk8s/current/credentials/client.config`.
 
-## Kubectl - Switching Between Environments
+```yaml
+# Under the clusters section, we must add the cluster
+clusters:
+  - cluster:
+      certificate-authority-data: {FROM PROD SERVER}
+      server: https://kubernetes:16443
+    name: microk8s-cluster
+
+# Under the contexts section, we must add the cluster as a context
+contexts:
+  - context:
+      cluster: microk8s-cluster
+      user: admin
+    name: microk8s
+
+# Under the users section, we need our admin user
+users:
+  - name: admin
+    user:
+      token: {FROM PROD SERVER}
+```
+
+NOTE: The `kubernetes` hostname under `clusters.cluster.server` is a placeholder for the internal LAN IP of the Ubuntu machine.
+
+## Switching Between Environments
 
 One thing to keep in mind is that the dev & prod environments are both Kubernetes clusters. It is simple to switch between them using the `kubectl` tool. Keep in mind that the environments must be setup first for this to work. Also, since the dev environment only exists on the dev machine, this is expected to only be run on the dev machine.
 
