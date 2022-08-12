@@ -67,11 +67,10 @@ Terraform needs certain secrets in order to operate. These secrets must be manua
 ### Phase 2 Secrets
 
 ```hcl
+# Both of the onepassword secrets are the values after being Base64 encoded 
 onepassword_creds = "####"
 onepassword_token = "####"
 ```
-
-# TODO mention 1password creds, base64 encoded, etc
 
 ## Debugging
 
