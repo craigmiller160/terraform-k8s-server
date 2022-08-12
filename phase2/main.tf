@@ -10,7 +10,7 @@ terraform {
       version = "2.20.0"
     }
     kubernetes = {
-      source = "hashicorp/kubernetes"
+      source  = "hashicorp/kubernetes"
       version = "2.12.1"
     }
   }
@@ -25,19 +25,19 @@ provider "docker" {
   host = "unix:///var/run/docker.sock"
   registry_auth {
     # TODO this is only for dev here
-    address = "localhost:5000"
+    address  = "localhost:5000"
     username = ""
     password = ""
   }
 }
 
 module "databases" {
-  source                 = "./modules/databases"
+  source = "./modules/databases"
 }
 
 module "utilities" {
-  source = "./modules/utilities"
+  source            = "./modules/utilities"
   onepassword_creds = var.onepassword_creds
   onepassword_token = var.onepassword_token
-  nexus_image = var.nexus_image
+  nexus_image       = var.nexus_image
 }
