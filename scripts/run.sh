@@ -2,8 +2,8 @@
 # $1 = env
 function get_env {
   case $1 in
-    "dev") source ./scripts/.dev.env ;;
-    "prod") source ./scripts/.prod.env ;;
+    "dev") source ./scripts/dev.env ;;
+    "prod") source ./scripts/prod.env ;;
     *)
       echo "Invalid environment: $1"
       exit 1
