@@ -34,7 +34,7 @@ kind create cluster --config=./kind-config.yml
 
 The production environment will run on my home Ubuntu machine and use MicroK8s as the Kubernetes provider. Here are the steps to set it up. Please note that unless specified otherwise, these steps must be performed on the Ubuntu machine.
 
-## Install & Configure MicroK8s
+### Install & Configure MicroK8s
 
 MicroK8s must be installed on the machine. The Snap tool is required to do so.
 
