@@ -28,7 +28,7 @@ resource "nexus_repository_npm_proxy" "npm_proxy" {
 
   negative_cache {
     enabled = true
-#    time_to_live = 1440
+    ttl = 1440
   }
 
   http_client {
@@ -93,6 +93,11 @@ resource "nexus_repository_docker_proxy" "docker_proxy" {
     remote_url = "https://registry-1.docker.io"
     content_max_age = 1440
     metadata_max_age = 1440
+  }
+
+  negative_cache {
+    enabled = true
+    ttl = 1440
   }
 
   http_client {
