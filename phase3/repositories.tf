@@ -1,5 +1,3 @@
-# Private NPM Repository (Hosted)
-# NPM Proxy Repository
 # NPM Repository Group
 
 resource "nexus_repository_npm_hosted" "npm_private" {
@@ -18,7 +16,7 @@ resource "nexus_repository_npm_proxy" "npm_proxy" {
   online = true
 
   storage {
-    blob_store_name = nexus_blobstore_file.npm_private.name
+    blob_store_name = nexus_blobstore_file.npm_proxy.name
     strict_content_type_validation = true
   }
 
@@ -31,5 +29,22 @@ resource "nexus_repository_npm_proxy" "npm_proxy" {
   negative_cache {
     enabled = true
     time_to_live = 1440
+  }
+}
+
+resource "nexus_repository_npm_group" "npm_group" {
+  name = "npm-group"
+  online = true
+
+  storage {
+    blob_store_name = nexus_blobstore_file.npm_group.name
+    strict_content_type_validation = true
+  }
+
+  group {
+    member_names = [
+      nexus_repository_npm_hosted.npm_private.name,
+      nexus_repository_npm_proxy.npm_proxy.name
+    ]
   }
 }
