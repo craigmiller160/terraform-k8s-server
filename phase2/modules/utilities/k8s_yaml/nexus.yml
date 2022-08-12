@@ -4,6 +4,7 @@ metadata:
   name: nexus
   namespace: default
 spec:
+  # TODO clean this up
   replicas: 1
   selector:
     matchLabels:
