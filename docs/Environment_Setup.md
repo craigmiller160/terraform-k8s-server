@@ -5,6 +5,9 @@ There are manual steps necessary for setting up the Dev & Prod environments befo
 ## Table of Contents
 
 1. [Dev Environment](#dev-environment)
+   1. [Install Kubectl](#install-kubectl)
+   2. [Install Kind](#install-kind)
+   3. [Create a Cluster](#create-a-cluster)
 2. [Prod Environment](#prod-environment)
 3. [Switching Between Environments](#switching-between-environments)
 
@@ -42,13 +45,15 @@ kind create cluster --config=./kind-config.yml
 
 The production environment will run on my home Ubuntu machine and use MicroK8s as the Kubernetes provider. Here are the steps to set it up.
 
-### Install & Configure MicroK8s
+### Install MicroK8s
 
 MicroK8s must be installed on the Ubuntu machine. The Snap tool is required to do so. All of these steps must be executed on the Ubuntu production machine.
 
 ```bash
 sudo snap install microk8s --classic --channel=1.24
 ```
+
+### Configure MicroK8s
 
 Once it is installed, it must be configured. First, addons need to be enabled:
 
