@@ -1,4 +1,4 @@
-# Environment Setup
+# Kubernetes Environment Setup
 
 There are manual steps necessary for setting up the Dev & Prod environments before they will be able to interact with Terraform. This guide covers those steps.
 
@@ -13,7 +13,6 @@ There are manual steps necessary for setting up the Dev & Prod environments befo
    2. [Configure MicroK8s](#configure-microk8s)
    3. [Allow Dev Machine to Access Prod Kubernetes](#allow-dev-machine-to-access-prod-kubernetes)
 3. [Switching Between Kubernetes Environments](#switching-between-kubernetes-environments)
-4. [Setup SSH Access to Prod Machine](#setup-ssh-access-to-prod-machine)
 
 ## Dev Environment
 
@@ -120,5 +119,3 @@ kubectl config use-context kind-kind
 # Use prod environment
 kubectl config use-context microk8s
 ```
-
-## Setup SSH Access to Prod Machine

@@ -4,7 +4,7 @@ This is the Terraform-driven setup for my Kubernetes Server.
 
 ## Table of Contents
 
-1. [Environment Setup](./docs/Environment_Setup.md)
+1. [Kubernetes Environment Setup](./docs/Environment_Setup.md)
 
 # TODO everything below here is old
 
