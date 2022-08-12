@@ -2,6 +2,16 @@
 
 This is the Terraform-driven setup for my Kubernetes Server.
 
+## Three-Phase Setup
+
+Due to limitations on some of the infrastructure being setup, Terraform will construct everything in a three-phase process.
+
+Phase 1 = Custom Kubernetes Type for 1Password Integration
+
+Phase 2 = Setup of key environment applications, secrets, and other resources
+
+Phase 3 = Special setup of Sonatype Nexus since a manual step is required first.
+
 ## Terraform Setup
 
 Terraform & TFLint must be installed on the development machine.
@@ -42,7 +52,9 @@ kubectl config use-context kind-kind
 
 ### Running Terraform
 
-For the dev environment, the `./dev.sh` script has been setup. This is a shortcut to enforcing the use of the Dev (aka Kind) Kubernetes with Terraform. This script can take whatever arguments `terraform` would.
+OUTDATED, RE-WRITE THIS
+
+For the dev environment, the `./tf.sh` script has been setup. This is a shortcut to enforcing the use of the Dev (aka Kind) Kubernetes with Terraform. This script can take whatever arguments `terraform` would.
 
 ### Working With NodePorts
 
@@ -50,11 +62,13 @@ All node ports must be exposed via a mapping in the `kind-config.yml`. Otherwise
 
 ## Secrets
 
-All secrets need to be stored in a file called `secrets.tfvars` at the root of the project. It should look like this:
+Terraform needs certain secrets in order to operate. These secrets must be manually setup locally in this repository prior to running the application. Secrets must be stored in a file called `secrets.tfvars` in the appropriate phase directory.
+
+### Phase 2 Secrets
 
 ```hcl
-database_cert = "####"
-database_key = "####"
+onepassword_creds = "####"
+onepassword_token = "####"
 ```
 
 # TODO mention 1password creds, base64 encoded, etc
