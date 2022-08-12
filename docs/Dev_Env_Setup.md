@@ -24,7 +24,11 @@ Once installed, the container will be set to automatically start whenever Docker
 
 ### Create a Cluster
 
-Kind will be used to create a Kubernetes cluster. There is a configuration file in the root of this project
+Kind will be used to create a Kubernetes cluster. There is a configuration file in the root of this project that needs to be used to properly configure the cluster.
+
+```bash
+kind create cluster --config=./kind-config.yml
+```
 
 ## Prod Environment
 
