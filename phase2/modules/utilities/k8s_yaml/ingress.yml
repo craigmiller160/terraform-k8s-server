@@ -19,7 +19,9 @@ metadata:
 spec:
   ingressClassName: nginx-ingress
   rules:
-    - http:
+    # TODO change the host
+    - host: hello-world.info
+      http:
         paths:
           # TODO revamp this for nexus UI vs nexus docker
           - path: /nexus
