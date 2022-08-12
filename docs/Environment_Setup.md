@@ -9,6 +9,9 @@ There are manual steps necessary for setting up the Dev & Prod environments befo
    2. [Install Kind](#install-kind)
    3. [Create a Cluster](#create-a-cluster)
 2. [Prod Environment](#prod-environment)
+   1. [Install MicroK8s](#install-microk8s)
+   2. [Configure MicroK8s](#configure-microk8s)
+   3. [Allow Dev Machine to Access Prod Kuberntes](#allow-dev-machine-to-access-prod-kubernetes)
 3. [Switching Between Environments](#switching-between-environments)
 
 ## Dev Environment
@@ -78,7 +81,7 @@ Lastly, add `kubectl` auto-completion to the machine's bash setup file:
 source <(kubectl completion bash)
 ```
 
-### Allow Dev Machine to Access Prod Machine
+### Allow Dev Machine to Access Prod Kubernetes
 
 On the dev machine, once `kubectl` is installed, there either will be a `~/.kube/config` file, or it needs to be created. Either way, the following changes must be made. There are some values that must be retrieved from the production Ubuntu machine. Those values can be found at the exact same paths in an identically-formatted yaml file at `/var/snap/microk8s/current/credentials/client.config`.
 
