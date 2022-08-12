@@ -53,3 +53,50 @@ resource "nexus_repository_npm_group" "npm_group" {
     ]
   }
 }
+
+resource "nexus_repository_docker_hosted" "docker_private" {
+  name = "docker-private"
+  online = true
+
+  storage {
+    blob_store_name = nexus_blobstore_file.docker_private.name
+    strict_content_type_validation = true
+    write_policy = "ALLOW_ONCE"
+  }
+
+  docker {
+    force_basic_auth = false
+    v1_enabled = true
+    https_port = 8083
+  }
+}
+
+resource "nexus_repository_docker_proxy" "docker_proxy" {
+  name = "docker-proxy"
+  online = true
+
+  storage {
+    blob_store_name = nexus_blobstore_file.docker_proxy.name
+    strict_content_type_validation = true
+  }
+
+  docker {
+    force_basic_auth = false
+    v1_enabled = false
+  }
+
+  docker_proxy {
+    index_type = "HUB"
+  }
+
+  proxy {
+    remote_url = "https://registry-1.docker.io"
+    content_max_age = 1440
+    metadata_max_age = 1440
+  }
+
+  http_client {
+    blocked = false
+    auto_block = true
+  }
+}
