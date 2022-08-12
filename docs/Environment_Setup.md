@@ -11,8 +11,9 @@ There are manual steps necessary for setting up the Dev & Prod environments befo
 2. [Prod Environment](#prod-environment)
    1. [Install MicroK8s](#install-microk8s)
    2. [Configure MicroK8s](#configure-microk8s)
-   3. [Allow Dev Machine to Access Prod Kuberntes](#allow-dev-machine-to-access-prod-kubernetes)
-3. [Switching Between Environments](#switching-between-environments)
+   3. [Allow Dev Machine to Access Prod Kubernetes](#allow-dev-machine-to-access-prod-kubernetes)
+3. [Switching Between Kubernetes Environments](#switching-between-kubernetes-environments)
+4. [Setup SSH Access to Prod Machine](#setup-ssh-access-to-prod-machine)
 
 ## Dev Environment
 
@@ -109,7 +110,7 @@ users:
 
 NOTE: The `kubernetes` hostname under `clusters.cluster.server` is a placeholder for the internal LAN IP of the Ubuntu machine.
 
-## Switching Between Environments
+## Switching Between Kubernetes Environments
 
 One thing to keep in mind is that the dev & prod environments are both Kubernetes clusters. It is simple to switch between them using the `kubectl` tool. Keep in mind that the environments must be setup first for this to work. Also, since the dev environment only exists on the dev machine, this is expected to only be run on the dev machine.
 
@@ -119,3 +120,5 @@ kubectl config use-context kind-kind
 # Use prod environment
 kubectl config use-context microk8s
 ```
+
+## Setup SSH Access to Prod Machine
