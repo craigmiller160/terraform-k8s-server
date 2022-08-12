@@ -6,7 +6,6 @@ metadata:
   name: nginx-ingress
   annotations:
     ingressclass.kubernetes.io/is-default-class: "true"
-  namespace: default
 spec:
   controller: k8s.io/ingress-nginx
 ---
@@ -28,4 +27,5 @@ spec:
             backend:
               service:
                 name: nexus-service
-                port: 8081
+                port:
+                  number: 8081
