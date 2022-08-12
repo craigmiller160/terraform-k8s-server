@@ -9,5 +9,6 @@ resource "nexus_repository_npm_hosted" "npm_private" {
   storage {
     blob_store_name = nexus_blobstore_file.npm_private.name
     strict_content_type_validation = true
+    write_policy = "ALLOW_ONCE"
   }
 }
