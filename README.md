@@ -75,3 +75,5 @@ onepassword_token = "####"
 ## Debugging
 
 Set `TF_LOG=DEBUG` prior to running any terraform commands to see debug logs. Kubernetes can cause terraform to hang if the container crashes.
+
+# Heavily clean up this readme. Add stuff about the Nexus Admin user setup manual step. Also transfer over the stuff for local development integration from the old docs
