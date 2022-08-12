@@ -51,16 +51,13 @@ function get_nexus_image_var {
   fi
 }
 
-# $1 = Directory
+# $1 = Directory, $2 = Command
 function get_k8s_context_var {
-  case $1 in
-    "phase1"|"phase2")
-      echo "-var=k8s_context=$k8s_context"
-    ;;
-    *)
-      echo ""
-    ;;
-  esac
+  if [[ $1 == "phase1" || $1 == "phase2" ]] && [[ $2 != "fmt" ]]; then
+    echo "-var=k8s_context=$k8s_context"
+  else
+    echo ""
+  fi
 }
 
 # $1 = env, $2 = Directory, #3 = Command
@@ -71,7 +68,9 @@ function run {
   backend_arg=$(get_backend_context $3)
   secrets_file=$(get_secrets_file $2)
   nexus_image_var=$(get_nexus_image_var $2)
-  k8s_context_var=$(get_k8s_context_var $2)
+  k8s_context_var=$(get_k8s_context_var $2 $3)
+
+  echo "$backend_arg $secrets_file $nexus_image_var $k8s_context_var"
 
   (
     cd "$2" &&
