@@ -30,6 +30,11 @@ resource "nexus_repository_npm_proxy" "npm_proxy" {
     enabled = true
     time_to_live = 1440
   }
+
+  http_client {
+    blocked = false
+    auto_block = true
+  }
 }
 
 resource "nexus_repository_npm_group" "npm_group" {
