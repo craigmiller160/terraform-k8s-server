@@ -1,6 +1,6 @@
 terraform {
   backend "kubernetes" {
-    secret_suffix = "pre-infrastructure-state"
+    secret_suffix = "phase1-state"
     config_path   = "~/.kube/config"
   }
 }
