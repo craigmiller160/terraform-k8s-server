@@ -4,6 +4,11 @@ The Prod Machine needs to be setup with SSH so that the Dev Machine can easily a
 
 ## Table of Contents
 
+1. [Install OpenSSH on Prod Server](#install-openssh-on-prod-server)
+2. [Configure Dev Machine SSH Client](#configure-dev-machine-ssh-client)
+3. [Setup SSH Key Authentication](#setup-ssh-key-authentication)
+4. [Restricting SSH Server to Only Key Authentication](#restricting-ssh-server-to-only-key-authentication)
+
 ## Install OpenSSH on Prod Server
 
 To install OpenSSH, use the following commands:
