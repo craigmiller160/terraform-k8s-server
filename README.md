@@ -2,6 +2,12 @@
 
 This is the Terraform-driven setup for my Kubernetes Server.
 
+## Table of Contents
+
+1. [Environment Setup](./docs/Environment_Setup.md)
+
+# TODO everything below here is old
+
 ## Three-Phase Setup
 
 Due to limitations on some of the infrastructure being setup, Terraform will construct everything in a three-phase process.
