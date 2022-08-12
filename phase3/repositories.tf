@@ -28,7 +28,7 @@ resource "nexus_repository_npm_proxy" "npm_proxy" {
 
   negative_cache {
     enabled = true
-    time_to_live = 1440
+#    time_to_live = 1440
   }
 
   http_client {
