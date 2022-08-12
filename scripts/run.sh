@@ -51,6 +51,18 @@ function get_nexus_image_var {
   fi
 }
 
+# $1 = Directory
+function get_k8s_context_var {
+  case $1 in
+    "phase1"|"phase2")
+      echo "-var=k8s_context=$k8s_context"
+    ;;
+    *)
+      echo ""
+    ;;
+  esac
+}
+
 # $1 = env, $2 = Directory, #3 = Command
 function run {
   get_env $1
@@ -59,11 +71,12 @@ function run {
   backend_arg=$(get_backend_context $3)
   secrets_file=$(get_secrets_file $2)
   nexus_image_var=$(get_nexus_image_var $2)
+  k8s_context_var=$(get_k8s_context_var $2)
 
   (
     cd "$2" &&
     terraform ${@:3} \
-      -var="k8s_context=$k8s_context" \
+      $k8s_context_var \
       $backend_arg \
       $secrets_file \
       $nexus_image_var
