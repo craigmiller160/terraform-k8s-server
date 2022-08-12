@@ -6,3 +6,8 @@ Integrate Nexus With Ingress
 Git Hook for Linting
 Let's Encrypt
     - With Automated Let's Encrypt Renewel
+
+
+
+docker container inspect kind-control-plane \
+  --format '{{ .NetworkSettings.Networks.kind.IPAddress }}'
