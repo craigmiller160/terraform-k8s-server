@@ -1,7 +1,8 @@
 Ingress
     - With TLS
-    - With Automated Let's Encrypt Renewel
+    - Move everything under the ingress
 Integrate Nexus With Ingress
     - Remove Nexus TLS if possible
 Git Hook for Linting
 Let's Encrypt
+    - With Automated Let's Encrypt Renewel
