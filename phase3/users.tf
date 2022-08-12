@@ -4,6 +4,6 @@ resource "nexus_security_user" "craigmiller160" {
   lastname = "Miller"
   email = "craigmiller160@gmail.com"
   password = var.nexus_craig_password
-#  roles = ["nx-admin"]
+  roles = ["nx-anonymous"]
   status = "active"
 }
