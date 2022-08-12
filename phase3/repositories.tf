@@ -105,3 +105,26 @@ resource "nexus_repository_docker_proxy" "docker_proxy" {
     auto_block = true
   }
 }
+
+resource "nexus_repository_docker_group" "docker_group" {
+  name = "docker-group"
+  online = true
+
+  docker {
+    force_basic_auth = false
+    v1_enabled = false
+  }
+
+  storage {
+    blob_store_name = nexus_blobstore_file.docker_group.name
+    strict_content_type_validation = true
+  }
+
+  group {
+    member_names = [
+      nexus_repository_docker_hosted.docker_private.name,
+      nexus_repository_docker_proxy.docker_proxy.name
+    ]
+    # TODO writeable_member may be a requirement for newer nexus versions
+  }
+}
