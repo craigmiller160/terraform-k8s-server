@@ -13,4 +13,8 @@ nodes:
         hostPort: 30004
       - containerPort: 30010
         hostPort: 30010
+      - containerPort: 80
+        hostPort: 30020
+      - containerPort: 443
+        hostPort: 30021
   - role: worker
