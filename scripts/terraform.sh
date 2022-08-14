@@ -81,8 +81,6 @@ function run_terraform {
   nexus_image_var=$(get_nexus_image_var $2 $3)
   k8s_context_var=$(get_k8s_context_var $2 $3)
 
-  echo "$backend_arg $secrets_file $nexus_image_var $k8s_context_var"
-
   (
     cd "$2" &&
     terraform ${@:3} \
