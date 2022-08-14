@@ -1,9 +1,22 @@
-#resource "kubernetes_ingress" "ingress" {
-#  metadata {
-#
-#  }
-#  spec {}
-#}
+resource "kubernetes_ingress" "ingress" {
+  metadata {
+    name: "cluster-ingress"
+  }
+  spec {
+    rule {
+      http {
+        path {
+          path = "/nexus"
+          path_type = "Prefix"
+          backend {
+            service_name = "nexus-service"
+            service_port = 8081
+          }
+        }
+      }
+    }
+  }
+}
 
 #resource "kubernetes_config_map" "nginx_load_balancer_microk8s_conf" {
 #  metadata {
