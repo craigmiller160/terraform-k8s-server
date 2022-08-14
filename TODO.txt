@@ -6,8 +6,7 @@ Integrate Nexus With Ingress
 Git Hook for Linting
 Let's Encrypt
     - With Automated Let's Encrypt Renewel
-
-
+Switch k8s back to hcl as much ad possible
 
 docker container inspect kind-control-plane \
   --format '{{ .NetworkSettings.Networks.kind.IPAddress }}'
