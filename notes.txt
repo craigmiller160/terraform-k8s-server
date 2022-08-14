@@ -1,0 +1,3 @@
+brew install ubuntu/microk8s/microk8s
+microk8s install or microk8s install --channel 1.24
+Might need to reboot after installation for addons to work
