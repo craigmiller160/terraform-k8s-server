@@ -5,3 +5,6 @@ Might need to reboot after installation for addons to work
 Figure out way to automate merging of k8s configs
 
 https://blog.jarrousse.org/2021/02/18/installing-microk8s-on-mac-os-x/
+
+multipass shell microk8s-vm
+multipass list (to get IP address)
