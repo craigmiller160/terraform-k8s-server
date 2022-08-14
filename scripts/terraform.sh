@@ -72,7 +72,7 @@ function get_k8s_context_var {
 }
 
 # $1 = env, $2 = Directory, #3 = Command
-function run {
+function run_terraform {
   get_env $1
   validate_phase $2
 
