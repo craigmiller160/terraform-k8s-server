@@ -5,3 +5,5 @@ Integrate Nexus With Ingress
     - Remove Nexus TLS if possible
 Git Hook for Linting
 Let's Encrypt
+Switch back to HCL for all k8s stuff
+Upgrade as many resources as possible and document upgrade steps
