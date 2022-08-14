@@ -44,12 +44,23 @@ function get_secrets_file {
   fi
 }
 
-# $1 = Directory, $2 Command
+# $1 = Directory, $2 = Command
 function get_nexus_image_var {
   if [ $2 == "fmt" ]; then
     echo ""
   elif [ $1 == "phase2" ]; then
     echo "-var=nexus_image=$nexus_image"
+  else
+    echo ""
+  fi
+}
+
+# $1 = Directory, $2 = Command
+function get_nexus_host_var {
+  if [ $2 == "fmt" ]; then
+    echo ""
+  elif [ $1 == "phase3" ]; then
+    echo "-var=nexus_host=$nexus_host"
   else
     echo ""
   fi
@@ -80,6 +91,7 @@ function run_terraform {
   secrets_file=$(get_secrets_file $2 $3)
   nexus_image_var=$(get_nexus_image_var $2 $3)
   k8s_context_var=$(get_k8s_context_var $2 $3)
+  nexus_host_var=$(get_nexus_host_var $2 $3)
 
   (
     cd "$2" &&
@@ -87,6 +99,7 @@ function run_terraform {
       $k8s_context_var \
       $backend_arg \
       $secrets_file \
-      $nexus_image_var
+      $nexus_image_var \
+      $nexus_host_var
   )
 }
