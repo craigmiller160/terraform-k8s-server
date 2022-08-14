@@ -18,6 +18,7 @@ function set_prod_config {
 }
 
 function set_config {
+  ensure_prod_backup
   case $1 in
     "dev") set_dev_config ;;
     "prod") set_prod_config ;;
@@ -26,6 +27,3 @@ function set_config {
     ;;
   esac
 }
-
-ensure_prod_backup
-set_config $1
