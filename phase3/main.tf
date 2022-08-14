@@ -16,6 +16,5 @@ provider "nexus" {
   insecure = true
   password = var.nexus_admin_password
   username = "admin"
-  # TODO need to make this work with https/other host for prod
-  url = "http://127.0.0.1:30003"
+  url = join("", ["http://", var.nexus_host, ":30003"])
 }
