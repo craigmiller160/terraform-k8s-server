@@ -7,3 +7,4 @@ Git Hook for Linting
 Let's Encrypt
 Switch back to HCL for all k8s stuff
 Upgrade as many resources as possible and document upgrade steps
+Try and switch Dev nexus to same image as Prod on MicroK8s
