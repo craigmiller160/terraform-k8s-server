@@ -111,15 +111,3 @@ resource "kubernetes_cluster_role" "onepassword_connect_operator_cluster_role" {
     ]
   }
 }
-
-resource "kubernetes_manifest" "onepassword_provided_service_account" {
-  manifest = yamldecode(local.service_account_doc)
-}
-
-resource "kubernetes_manifest" "onepassword_provided_cluster_role_binding" {
-  manifest = yamldecode(local.cluster_role_binding_doc)
-}
-
-resource "kubernetes_manifest" "onepassword_provided_cluster_role" {
-  manifest = yamldecode(local.cluster_role_doc)
-}
