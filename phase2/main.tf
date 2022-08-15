@@ -16,10 +16,3 @@ provider "kubernetes" {
   config_path    = "~/.kube/config"
   config_context = var.k8s_context
 }
-
-module "utilities" {
-  source            = "./modules/utilities"
-  onepassword_creds = var.onepassword_creds
-  onepassword_token = var.onepassword_token
-  nexus_image       = var.nexus_image
-}
