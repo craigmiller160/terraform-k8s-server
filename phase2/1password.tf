@@ -28,6 +28,8 @@ resource "kubernetes_secret" "onepassword" {
   }
 }
 
+
+
 resource "kubernetes_manifest" "onepassword_connect_config" {
   manifest = yamldecode(local.onepassword_connect_configmap_doc)
 }
@@ -37,7 +39,11 @@ resource "kubernetes_manifest" "onepassword_sync_config" {
 }
 
 resource "kubernetes_manifest" "onepassword_connect_sync_deployment" {
-  depends_on = [kubernetes_secret.onepassword]
+  depends_on = [
+    kubernetes_secret.onepassword,
+    kubernetes_manifest.onepassword_connect_config,
+    kubernetes_manifest.onepassword_sync_config
+  ]
   manifest = yamldecode(local.onepassword_connect_sync_deployment_doc)
 }
 
@@ -51,6 +57,7 @@ resource "kubernetes_manifest" "onepassword_connect_operator_config" {
 
 resource "kubernetes_manifest" "onepassword_connect_operator_deployment" {
   depends_on = [
+    kubernetes_manifest.onepassword_connect_operator_config
     kubernetes_manifest.onepassword_connect_sync_deployment,
     kubernetes_manifest.onepassword_connect_service,
     kubernetes_service_account.onepassword_connect_operator_service_account,
