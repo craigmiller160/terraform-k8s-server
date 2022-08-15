@@ -6,6 +6,19 @@ resource "kubernetes_ingress_v1" "ingress" {
     rule {
       http {
         path {
+          path = "/ingress-test"
+          path_type = "Prefix"
+          backend {
+            service {
+              name = "exp-service"
+              port {
+                number = 80
+              }
+            }
+          }
+        }
+
+        path {
           path = "/nexus"
           path_type = "Prefix"
           backend {
