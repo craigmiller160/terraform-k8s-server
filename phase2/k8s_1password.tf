@@ -50,6 +50,10 @@ resource "kubernetes_manifest" "onepassword_connect_operator_config" {
 }
 
 resource "kubernetes_manifest" "onepassword_connect_operator_deployment" {
+  depends_on = [
+    kubernetes_manifest.onepassword_connect_sync_deployment,
+    kubernetes_manifest.onepassword_connect_service,
+  ]
   manifest = yamldecode(local.onepassword_operator_deployment_doc)
 }
 

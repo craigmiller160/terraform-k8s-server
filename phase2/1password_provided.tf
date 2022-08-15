@@ -5,6 +5,12 @@ locals {
   cluster_role_doc = local.all_service_account_docs.2
 }
 
+resource "kubernetes_service_account" "onepassword_connect_operator_service_account" {
+  metadata {
+
+  }
+}
+
 resource "kubernetes_manifest" "onepassword_provided_service_account" {
   manifest = yamldecode(local.service_account_doc)
 }
