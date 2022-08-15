@@ -18,6 +18,19 @@ resource "kubernetes_config_map" "mongodb_config" {
   }
 }
 
+resource "kubernetes_deployment" "mongodb" {
+  metadata {
+    name = "mongodb"
+    namespace = "default"
+  }
+  spec {
+    template {
+      metadata {}
+      spec {}
+    }
+  }
+}
+
 resource "kubernetes_manifest" "mongodb_deployment" {
   manifest = yamldecode(local.mongodb_deployment_doc)
 }

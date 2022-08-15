@@ -1,11 +1,11 @@
 # TODO probably want this to be a part of the ingress config as an ingress test
+# TODO probably can delete this
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: exp
   namespace: default
 spec:
-  revisionHistoryLimit: 0
   replicas: 1
   selector:
     matchLabels:
