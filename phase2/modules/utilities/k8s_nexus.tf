@@ -6,6 +6,8 @@ locals {
   nexus_service_doc = local.nexus_all_docs.1
 }
 
+# TODO nexus keeps crashing because
+
 resource "kubernetes_manifest" "nexus_deployment" {
   manifest = yamldecode(local.nexus_deployment_doc)
 }
