@@ -147,10 +147,6 @@ resource "kubernetes_service" "onepassword_connect_service" {
   }
 }
 
-resource "kubernetes_manifest" "onepassword_connect_service" {
-  manifest = yamldecode(local.onepassword_connect_service_doc)
-}
-
 resource "kubernetes_manifest" "onepassword_connect_operator_config" {
   manifest = yamldecode(local.onepassword_operator_configmap_doc)
 }
