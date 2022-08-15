@@ -28,23 +28,106 @@ resource "kubernetes_secret" "onepassword" {
   }
 }
 
-
-
-resource "kubernetes_manifest" "onepassword_connect_config" {
-  manifest = yamldecode(local.onepassword_connect_configmap_doc)
+resource "kubernetes_config_map" "onepassword_connect_config" {
+  metadata {
+    name = "onepassword-connect-config"
+    namespace = "default"
+  }
+  data = {
+    OP_HTTP_PORT = "8081"
+    OP_SESSION = "/home/opuser/.op/creds/credentials"
+  }
 }
 
-resource "kubernetes_manifest" "onepassword_sync_config" {
-  manifest = yamldecode(local.onepassword_sync_configmap_doc)
+resource "kubernetes_config_map" "onepassword_sync_config" {
+  metadata {
+    name = "onepassword-sync-config"
+    namespace = "default"
+  }
+  data = {
+    OP_SESSION = "/home/opuser/.op/creds/credentials"
+  }
 }
 
-resource "kubernetes_manifest" "onepassword_connect_sync_deployment" {
+resource "kubernetes_deployment" "onepassword_connect_sync_deployment" {
   depends_on = [
     kubernetes_secret.onepassword,
-    kubernetes_manifest.onepassword_connect_config,
-    kubernetes_manifest.onepassword_sync_config
+    kubernetes_config_map.onepassword_connect_config,
+    kubernetes_config_map.onepassword_sync_config
   ]
-  manifest = yamldecode(local.onepassword_connect_sync_deployment_doc)
+  metadata {
+    name = "onepassword-connect-sync"
+    namespace = "default"
+  }
+  spec {
+    replicas = 1
+    selector {
+      match_labels = {
+        app = "onepassword-connect-sync"
+      }
+    }
+    template {
+      metadata {
+        labels = {
+          app = "onepassword-connect-sync"
+        }
+      }
+      spec {
+        container {
+          name = "onepassword-connect"
+          image: "1password/connect-api:1.5"
+          image_pull_policy = "IfNotPresent"
+          port {
+            container_port = 8081
+          }
+          volume_mount {
+            mount_path = "/home/opuser/.op/data"
+            name       = "onepassword-volume"
+          }
+          volume_mount {
+            mount_path = "/home/opuser/.op/creds"
+            name       = "onepassword-creds-secret-volume"
+          }
+          env_from {
+            config_map_ref {
+              name = "onepassword-connect-config"
+            }
+          }
+        }
+        container {
+          name = "onepassword-sync"
+          image = "1password/connect-sync:1.5"
+          image_pull_policy = "IfNotPresent"
+          port {
+            container_port = 8080
+          }
+          volume_mount {
+            mount_path = "/home/opuser/.op/data"
+            name       = "onepassword-volume"
+          }
+          volume_mount {
+            mount_path = "/home/opuser/.op/creds"
+            name       = "onepassword-creds-secret-volume"
+          }
+          env_from {
+            config_map_ref {
+              name = "onepassword-sync-config"
+            }
+          }
+        }
+        volume {
+          name = "onepassword-volume"
+          empty_dir {}
+        }
+        volume {
+          name = "onepassword-creds-secret-volume"
+          secret {
+            secret_name = "onepassword"
+          }
+        }
+      }
+    }
+  }
 }
 
 resource "kubernetes_manifest" "onepassword_connect_service" {
