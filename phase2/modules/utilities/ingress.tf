@@ -17,6 +17,19 @@ resource "kubernetes_ingress_v1" "ingress" {
             }
           }
         }
+
+        path {
+          path = "/covid-19"
+          path_type = "Prefix"
+          backend {
+            service {
+              name = "covid-19-client-service"
+              port {
+                number = 80
+              }
+            }
+          }
+        }
       }
     }
   }
