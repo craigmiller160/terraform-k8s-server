@@ -53,6 +53,9 @@ resource "kubernetes_manifest" "onepassword_connect_operator_deployment" {
   depends_on = [
     kubernetes_manifest.onepassword_connect_sync_deployment,
     kubernetes_manifest.onepassword_connect_service,
+    kubernetes_manifest.onepassword_provided_service_account,
+    kubernetes_manifest.onepassword_provided_cluster_role,
+    kubernetes_manifest.onepassword_provided_cluster_role_binding
   ]
   manifest = yamldecode(local.onepassword_operator_deployment_doc)
 }

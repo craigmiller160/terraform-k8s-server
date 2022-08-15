@@ -7,7 +7,8 @@ locals {
 
 resource "kubernetes_service_account" "onepassword_connect_operator_service_account" {
   metadata {
-
+    name = "onepassword-connect-operator"
+    namespace = "default"
   }
 }
 
