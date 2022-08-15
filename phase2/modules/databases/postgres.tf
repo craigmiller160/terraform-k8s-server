@@ -1,10 +1,3 @@
-# TODO delete all locals
-locals {
-  postgres_all_docs = split("---", file("${path.module}/k8s_yaml/postgres.yml"))
-  postgres_deployment_doc = local.postgres_all_docs.0
-  postgres_service_doc = local.postgres_all_docs.1
-}
-
 resource "kubernetes_deployment" "postgres" {
   metadata {
     name = "postgres"
@@ -93,6 +86,24 @@ resource "kubernetes_deployment" "postgres" {
           }
         }
       }
+    }
+  }
+}
+
+resource "kubernetes_service" "postgres_service" {
+  metadata {
+    name = "postgres-service"
+    namespace = "default"
+  }
+  spec {
+    type = "NodePort"
+    selector = {
+      app = "postgres"
+    }
+    port {
+      port = "5432"
+      target_port = "5432"
+      node_port = "30001"
     }
   }
 }
