@@ -1,4 +1,8 @@
 resource "kubernetes_deployment" "postgres" {
+  depends_on = [
+    kubernetes_manifest.secret_database_tls_certs,
+    kubernetes_manifest.secret_postgres_root_account
+  ]
   metadata {
     name = "postgres"
     namespace = "default"
