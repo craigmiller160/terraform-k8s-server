@@ -107,7 +107,3 @@ resource "kubernetes_service" "postgres_service" {
     }
   }
 }
-
-resource "kubernetes_manifest" "postgres_service" {
-  manifest = yamldecode(local.postgres_service_doc)
-}
