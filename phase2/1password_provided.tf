@@ -55,6 +55,61 @@ resource "kubernetes_cluster_role" "onepassword_connect_operator_cluster_role" {
       "namespaces"
     ]
   }
+  rule {
+    api_groups = ["apps"]
+    resources = [
+      "deployments",
+      "daemonsets",
+      "replicasets",
+      "statefulsets"
+    ]
+    verbs = [
+      "create",
+      "delete",
+      "get",
+      "list",
+      "patch",
+      "update",
+      "watch"
+    ]
+  }
+  rule {
+    api_groups = ["monitoring.coreos.com"]
+    resources = ["        servicemonitors"]
+    verbs = ["get", "create"]
+  }
+  rule {
+    api_groups = ["apps"]
+    resource_names = ["onepassword-connect-operator"]
+    resources = ["deployments/finalizers"]
+    verbs = ["        update"]
+  }
+  rule {
+    api_groups = [""]
+    resources = ["pods"]
+    verbs = ["get"]
+  }
+  rule {
+    api_groups = ["apps"]
+    resources = [
+      "replicasets",
+      "deployments"
+    ]
+    verbs = ["get"]
+  }
+  rule {
+    api_groups = ["onepassword.com"]
+    resources = ["*"]
+    verbs = [
+      "create",
+      "delete",
+      "get",
+      "list",
+      "patch",
+      "update",
+      "watch"
+    ]
+  }
 }
 
 resource "kubernetes_manifest" "onepassword_provided_service_account" {
