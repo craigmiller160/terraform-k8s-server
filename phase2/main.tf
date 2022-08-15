@@ -17,10 +17,6 @@ provider "kubernetes" {
   config_context = var.k8s_context
 }
 
-module "databases" {
-  source = "./modules/databases"
-}
-
 module "utilities" {
   source            = "./modules/utilities"
   onepassword_creds = var.onepassword_creds
