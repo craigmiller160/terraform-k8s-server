@@ -130,6 +130,23 @@ resource "kubernetes_deployment" "onepassword_connect_sync_deployment" {
   }
 }
 
+resource "kubernetes_service" "onepassword_connect_service" {
+  metadata {
+    name = "onepassword-connect-service"
+    namespace = "default"
+  }
+  spec {
+    type = "ClusterIP"
+    selector = {
+      app = "onepassword-connect-sync"
+    }
+    port {
+      port = 8081
+      target_port = 8081
+    }
+  }
+}
+
 resource "kubernetes_manifest" "onepassword_connect_service" {
   manifest = yamldecode(local.onepassword_connect_service_doc)
 }
