@@ -13,7 +13,7 @@ resource "kubernetes_config_map" "mongodb_config" {
 resource "kubernetes_deployment" "mongodb" {
   depends_on = [
     kubernetes_config_map.mongodb_config,
-    kubernetes_manifest.secret_database_tls_certs
+    kubernetes_manifest.secret_database_tls_certs,
     kubernetes_manifest.secret_mongodb_root_account
   ]
   metadata {
