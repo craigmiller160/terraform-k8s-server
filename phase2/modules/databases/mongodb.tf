@@ -1,3 +1,4 @@
+# TODO delete the locals
 locals {
   mongodb_all_docs = split("---", file("${path.module}/k8s_yaml/mongodb.yml"))
   mongodb_configmap_doc = local.mongodb_all_docs.0
@@ -5,8 +6,16 @@ locals {
   mongodb_service_doc = local.mongodb_all_docs.2
 }
 
-resource "kubernetes_manifest" "mongodb_config" {
-  manifest = yamldecode(local.mongodb_configmap_doc)
+resource "kubernetes_config_map" "mongodb_config" {
+  metadata {
+    name = "mongodb-config"
+    namespace = "default"
+  }
+  data = {
+    MONGO_HOST = "mongodb-service"
+    MONGO_AUTH_DB = "admin"
+    MONGO_PORT = "27017"
+  }
 }
 
 resource "kubernetes_manifest" "mongodb_deployment" {
