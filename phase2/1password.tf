@@ -147,20 +147,78 @@ resource "kubernetes_service" "onepassword_connect_service" {
   }
 }
 
-resource "kubernetes_manifest" "onepassword_connect_operator_config" {
-  manifest = yamldecode(local.onepassword_operator_configmap_doc)
+resource "kubernetes_config_map" "onepassword_connect_operator_config" {
+  metadata {
+    name = "onepassword-connect-operator-config"
+    namespace = "default"
+  }
+  data = {
+    WATCH_NAMESPACE = "default"
+    OPERATOR_NAME = "onepassword-connect-operator"
+    OP_CONNECT_HOST = "http://onepassword-connect-service:8081"
+    POLLING_INTERVAL = "10"
+    AUTO_RESTART = "false"
+  }
 }
 
-resource "kubernetes_manifest" "onepassword_connect_operator_deployment" {
+resource "kubernetes_deployment" "onepassword_connect_operator" {
   depends_on = [
-    kubernetes_manifest.onepassword_connect_operator_config
-    kubernetes_manifest.onepassword_connect_sync_deployment,
-    kubernetes_manifest.onepassword_connect_service,
+    kubernetes_config_map.onepassword_connect_operator_config
+    kubernetes_deployment.onepassword_connect_sync_deployment,
+    kubernetes_service.onepassword_connect_service,
     kubernetes_service_account.onepassword_connect_operator_service_account,
     kubernetes_cluster_role_binding.onepassword_connect_operator_cluster_role_binding,
     kubernetes_cluster_role.onepassword_connect_operator_cluster_role
   ]
-  manifest = yamldecode(local.onepassword_operator_deployment_doc)
+  metadata {
+    name = "onepassword-connect-operator"
+    namespace = "default"
+  }
+  spec {
+    replicas = 1
+    selector {
+      match_labels = {
+        name = "onepassword-connect-operator"
+      }
+    }
+    template {
+      metadata {
+        labels = {
+          name = "onepassword-connect-operator"
+        }
+      }
+      spec {
+        service_account_name = "onepassword-connect-operator"
+        container {
+          name = "onepassword-connect-operator"
+          image = "1password/onepassword-operator:1.5"
+          command = ["/manager"]
+          env_from {
+            config_map_ref {
+              name = "onepassword-connect-operator-config"
+            }
+          }
+          env {
+            name = "POD_NAME"
+            value_from {
+              field_ref {
+                field_path = "metadata.name"
+              }
+            }
+          }
+          env {
+            name = "OP_CONNECT_TOKEN"
+            value_from {
+              secret_key_ref {
+                name = "onepassword"
+                key = "token"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 resource "kubernetes_manifest" "secret_mongodb_root_account" {
