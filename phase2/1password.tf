@@ -222,21 +222,21 @@ resource "kubernetes_deployment" "onepassword_connect_operator" {
 }
 
 resource "kubernetes_manifest" "secret_mongodb_root_account" {
-  depends_on = [kubernetes_manifest.onepassword_connect_operator_deployment]
+  depends_on = [kubernetes_deployment.onepassword_connect_operator]
   manifest = yamldecode(local.onepassword_secret_values_mongodb_root_account_doc)
 }
 
 resource "kubernetes_manifest" "secret_postgres_root_account" {
-  depends_on = [kubernetes_manifest.onepassword_connect_operator_deployment]
+  depends_on = [kubernetes_deployment.onepassword_connect_operator]
   manifest = yamldecode(local.onepassword_secret_values_postgres_root_account_doc)
 }
 
 resource "kubernetes_manifest" "secret_database_tls_certs" {
-  depends_on = [kubernetes_manifest.onepassword_connect_operator_deployment]
+  depends_on = [kubernetes_deployment.onepassword_connect_operator]
   manifest = yamldecode(local.onepassword_secret_values_database_tls_doc)
 }
 
 resource "kubernetes_manifest" "secret_craigmiller160_tls_certs" {
-  depends_on = [kubernetes_manifest.onepassword_connect_operator_deployment]
+  depends_on = [kubernetes_deployment.onepassword_connect_operator]
   manifest = yamldecode(local.onepassword_secret_values_craigmiller160_tls_doc)
 }
