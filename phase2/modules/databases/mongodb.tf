@@ -24,9 +24,102 @@ resource "kubernetes_deployment" "mongodb" {
     namespace = "default"
   }
   spec {
+    replicas = 1
+    strategy {
+      type = "Recreate"
+    }
+    selector {
+      match_labels = {
+        app = "mongodb"
+      }
+    }
     template {
-      metadata {}
-      spec {}
+      metadata {
+        labels = {
+          app = "mongodb"
+        }
+      }
+      spec {
+        init_container {
+          name = "prepare-certs"
+          image = "busybox:1.28"
+          image_pull_policy = "IfNotPresent"
+          command = [
+            "sh",
+            "-c",
+            "cat /certs-secret/cert | base64 -d > /certs/mongodb.pem && cat /certs-secret/key | base64 -d >> /certs/mongodb.pem"
+          ]
+          volume_mount {
+            mount_path = "/certs-secret"
+            name       = "mongodb-certs-secret-volume"
+          }
+          volume_mount {
+            mount_path = "/certs"
+            name       = "mongodb-certs-volume"
+          }
+        }
+        container {
+          name = "mongodb"
+          image = "mongo:4.4.2"
+          image_pull_policy = "IfNotPresent"
+          args = [
+            "--tlsMode",
+            "requireTLS",
+            "--tlsCertificateKeyFile",
+            "/certs/mongodb.pem"
+          ]
+          port {
+            container_port = 27017
+          }
+          env_from {
+            config_map_ref {
+              name = "mongodb-config"
+            }
+          }
+          env {
+            name = "MONGO_INITDB_ROOT_USERNAME"
+            value_from {
+              secret_key_ref {
+                name = "mongodb-root-account"
+                key = "username"
+              }
+            }
+          }
+          env {
+            name = "MONGO_INITDB_ROOT_PASSWORD"
+            value_from {
+              secret_key_ref {
+                name = "mongodb-root-account"
+                key = "password"
+              }
+            }
+          }
+          volume_mount {
+            mount_path = "/data/db"
+            name       = "mongodb-volume"
+          }
+          volume_mount {
+            mount_path = "/certs"
+            name       = "mongodb-certs-volume"
+          }
+        }
+        volume {
+          name = "mongodb-volume"
+          host_path {
+            path = "/opt/kubernetes/data/mongodb"
+          }
+        }
+        volume {
+          name = "mongodb-certs-volume"
+          empty_dir {}
+        }
+        volume {
+          name = "mongodb-certs-secret-volume"
+          secret {
+            secret_name = "database-tls-certs"
+          }
+        }
+      }
     }
   }
 }
