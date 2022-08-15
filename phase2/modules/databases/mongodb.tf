@@ -124,10 +124,20 @@ resource "kubernetes_deployment" "mongodb" {
   }
 }
 
-resource "kubernetes_manifest" "mongodb_deployment" {
-  manifest = yamldecode(local.mongodb_deployment_doc)
-}
-
-resource "kubernetes_manifest" "mongodb_service" {
-  manifest = yamldecode(local.mongodb_service_doc)
+resource "kubernetes_service" "mongodb_service" {
+  metadata {
+    name = "mongodb-service"
+    namespace = "default"
+  }
+  spec {
+    type = "NodePort"
+    selector = {
+      app = "mongodb"
+    }
+    port {
+      port = "27017"
+      target_port = "27017"
+      node_port = "30002"
+    }
+  }
 }
