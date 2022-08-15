@@ -1,10 +1,3 @@
-locals {
-  all_service_account_docs = split("---", file("${path.module}/k8s_yaml/1password_provided/1password_service_account.yml"))
-  service_account_doc = local.all_service_account_docs.0
-  cluster_role_binding_doc = local.all_service_account_docs.1
-  cluster_role_doc = local.all_service_account_docs.2
-}
-
 resource "kubernetes_service_account" "onepassword_connect_operator_service_account" {
   metadata {
     name = "onepassword-connect-operator"
