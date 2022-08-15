@@ -6,7 +6,7 @@ locals {
   nexus_service_doc = local.nexus_all_docs.1
 }
 
-# TODO nexus keeps crashing because
+# TODO nexus keeps crashing because of something in the setup container, probably related to the permissions change
 
 resource "kubernetes_manifest" "nexus_deployment" {
   manifest = yamldecode(local.nexus_deployment_doc)
