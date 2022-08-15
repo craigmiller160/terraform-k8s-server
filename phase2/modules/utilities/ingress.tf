@@ -60,7 +60,7 @@ resource "kubernetes_ingress_v1" "ingress" {
           path_type = "Prefix"
           backend {
             service {
-              name = "exp-service"
+              name = "ingress-test-service"
               port {
                 number = 80
               }
