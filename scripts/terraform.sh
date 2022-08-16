@@ -1,4 +1,4 @@
-
+# TODO probably delete this
 # $1 = env
 function get_env {
   case $1 in
