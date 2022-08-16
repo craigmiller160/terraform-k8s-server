@@ -66,6 +66,8 @@ sudo microk8s enable dashboard
 sudo microk8s enable storage
 sudo microk8s enable registry
 sudo microk8s enable helm3
+
+microk8s enable ingress dns dashboard storage registry helm3
 ```
 
 Then, aliases for MicroK8s commands should be added:
