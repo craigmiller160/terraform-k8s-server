@@ -4,6 +4,7 @@ Ingress
     - With Automated Let's Encrypt Renewel
 Integrate Nexus With Ingress
     - Remove Nexus TLS if possible
+P12 can be created by Terraform, no need to do it in init container
 Git Hook for Linting
 Let's Encrypt
 Switch back to HCL for all k8s stuff
