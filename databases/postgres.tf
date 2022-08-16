@@ -50,6 +50,14 @@ resource "kubernetes_deployment" "postgres" {
           port {
             container_port = 5432
           }
+          volume_mount {
+            mount_path = "/var/lib/postgresql/certs"
+            name       = "postgres-certs-volume"
+          }
+          volume_mount {
+            mount_path = "/var/lib/postgresql/data"
+            name       = "postgres-volume"
+          }
           env {
             name = "POSTGRES_USER"
             value_from {
