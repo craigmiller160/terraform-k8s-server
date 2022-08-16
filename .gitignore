@@ -5,3 +5,4 @@ terraform.tfstate
 terraform.tfstate.backup
 phase2/secrets.tfvars
 phase3/secrets.tfvars
+1password/secrets.tfvars
