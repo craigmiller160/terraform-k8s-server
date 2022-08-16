@@ -1,6 +1,6 @@
 terraform {
   backend "kubernetes" {
-    secret_suffix = "phase1-state"
+    secret_suffix = "k8s-custom-resources-state"
     config_path   = "~/.kube/config"
   }
 }
