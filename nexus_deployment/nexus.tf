@@ -1,8 +1,5 @@
 # TODO still needs major cleanup
 resource "kubernetes_deployment" "nexus" {
-  depends_on = [
-    kubernetes_manifest.secret_craigmiller160_tls_certs
-  ]
   metadata {
     name = "nexus"
     namespace = "default"
