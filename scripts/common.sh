@@ -42,3 +42,12 @@ function get_secrets_file {
     echo ""
   fi
 }
+
+# $1 = Command
+function get_nexus_image_var {
+  if [ $1 == "fmt" ]; then
+    echo ""
+  else
+    echo "-var=nexus_image=$nexus_image"
+  fi
+}
