@@ -31,3 +31,14 @@ function get_k8s_context_var {
     echo "-var=k8s_context=$k8s_context"
   fi
 }
+
+# $1 = Directory, $2 Command
+function get_secrets_file {
+  if [ $2 == "fmt" ]; then
+    echo ""
+  elif [ -f "$1/secrets.tfvars" ]; then
+    echo "-var-file=secrets.tfvars"
+  else
+    echo ""
+  fi
+}
