@@ -106,7 +106,7 @@ resource "kubernetes_service" "nexus_service" {
       name = "docker-http"
       port = 8083
       target_port = 8083
-      node_port = 30003
+      node_port = 30004
       protocol = "TCP"
     }
   }
