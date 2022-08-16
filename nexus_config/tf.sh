@@ -7,12 +7,12 @@ source "$module_file_dir/../scripts/common.sh"
 get_env $1
 backend_arg=$(get_backend_context $2)
 k8s_context_var=$(get_k8s_context_var $2)
-nexus_image_var=$(get_nexus_image_var $2)
+secrets_file=$(get_secrets_file $module_file_dir $2)
 
 (
   cd "$module_file_dir" &&
   terraform ${@:2} \
     $backend_arg \
     $k8s_context_var \
-    $nexus_image_var
+    $secrets_file
 )
