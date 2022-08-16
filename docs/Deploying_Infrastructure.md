@@ -3,6 +3,32 @@
 Once everything is setup, it's time to deploy the infrastructure.
 
 ## Table of Contents
+# TODO write this part
+
+## Understanding the Modular Design
+
+The infrastructure here has been organized in a modular fashion. This was done for a reason and has some things that need to be understood about it.
+
+### Why Modular?
+
+1. There are certain parts of the infrastructure that couldn't be completely automated or made to go all in one shot. Therefore separate stages were a necessity.
+2. Terraform can struggle to properly plan massive deployments across a variety of systems. Smaller modules means a more efficient and effective Terraform deployment.
+
+### Module Ordering
+
+When creating & destroying infrastructure, there is an order that must be respected. This is because different modules depend on the result of previous modules. When updating an existing module, for the most part it can be done independently of the rest, unless a change in it will impact another module. In that case, the ordering rules here must be respected.
+
+1. k8s_custom_resources
+2. 1password
+3. databases
+4. nexus_deployment
+5. nexus_config
+6. ingress
+
+
+
+
+
 
 ## Three-Phase Process
 
