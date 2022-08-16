@@ -1,10 +1,12 @@
 #!/bin/bash
 
+file_dir=$(dirname "${BASH_SOURCE[0]}")
+
 # $1 = env
 function get_env {
   case $1 in
-    "dev") source ./scripts/dev.env ;;
-    "prod") source ./scripts/prod.env ;;
+    "dev") source "$file_dir/../scripts/dev.env" ;;
+    "prod") source "$file_dir/../scripts/prod.env" ;;
     *)
       echo "Invalid environment: $1"
       exit 1
