@@ -9,3 +9,5 @@ Git Hook for Linting
 Let's Encrypt
 Upgrade as many resources as possible and document upgrade steps
 Try and switch Dev nexus to same image as Prod on MicroK8s
+
+IN DOCS = Nexus Host is Multipass MicroK8s host
