@@ -51,3 +51,12 @@ function get_nexus_image_var {
     echo "-var=nexus_image=$nexus_image"
   fi
 }
+
+# $1 = Command
+function get_nexus_host_var {
+  if [ $1== "fmt" ]; then
+    echo ""
+  else
+    echo "-var=nexus_host=$nexus_host"
+  fi
+}
