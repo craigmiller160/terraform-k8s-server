@@ -1,8 +1,6 @@
-resource "kubernetes_service_account" "onepassword_connect_operator_service_account" {
-  metadata {
-    name = "onepassword-connect-operator"
-    namespace = "default"
-  }
+# This is a manifest because of a bug in the k8s provider for the service account resource
+resource "kubernetes_manifest" "onepassword_connect_operator_service_account" {
+  manifest = yamldecode(file("${path.module}/k8s_yaml/1Password_service_account.yml"))
 }
 
 resource "kubernetes_cluster_role_binding" "onepassword_connect_operator_cluster_role_binding" {

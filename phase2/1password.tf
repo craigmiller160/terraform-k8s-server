@@ -156,7 +156,7 @@ resource "kubernetes_deployment" "onepassword_connect_operator" {
     kubernetes_config_map.onepassword_connect_operator_config,
     kubernetes_deployment.onepassword_connect_sync_deployment,
     kubernetes_service.onepassword_connect_service,
-    kubernetes_service_account.onepassword_connect_operator_service_account,
+    kubernetes_manifest.onepassword_connect_operator_service_account,
     kubernetes_cluster_role_binding.onepassword_connect_operator_cluster_role_binding,
     kubernetes_cluster_role.onepassword_connect_operator_cluster_role
   ]
