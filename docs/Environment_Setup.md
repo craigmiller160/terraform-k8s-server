@@ -1,19 +1,17 @@
-# Setup Kubernetes Environment (Deprecated, Needs Re-Write)
+# Setup Kubernetes Environment
 
 There are manual steps necessary for setting up the Dev & Prod environments before they will be able to interact with Terraform. This guide covers those steps.
 
 ## Table of Contents
-# TODO re-write this
 
-1. [Dev Environment](#dev-environment)
+1. [Setup MicroK8s](#setup-microk8s)
+   1. [Installing MicroK8s](#installing-microk8s)
+   2. [Configuring MicroK8s](#configuring-microk8s)
+   3. [Additional Production Configuration](#additional-production-configuration)
+2. [Configuring the Dev Machine for Multiple Kubernetes Clusters](#configuring-the-dev-machine-for-multiple-kubernetes-clusters)
    1. [Install Kubectl](#install-kubectl)
-   2. [Install Kind](#install-kind)
-   3. [Create a Cluster](#create-a-cluster)
-2. [Prod Environment](#prod-environment)
-   1. [Install MicroK8s](#install-microk8s)
-   2. [Configure MicroK8s](#configure-microk8s)
-   3. [Allow Dev Machine to Access Prod Kubernetes](#allow-dev-machine-to-access-prod-kubernetes)
-3. [Switching Between Kubernetes Environments](#switching-between-kubernetes-environments)
+   2. [Prepare Kubectl Configuration](#prepare-kubectl-configuration)
+   3. [Switching Between Clusters](#switching-between-clusters)
 
 ## Setup MicroK8s
 
@@ -42,7 +40,7 @@ MicroK8s requires several addons to be enabled to ensure its full capabilities. 
 microk8s enable ingress dns dashboard storage registry helm3
 ```
 
-## Additional Production Configuration
+### Additional Production Configuration
 
 Aliases for MicroK8s commands should be added on the production server:
 
