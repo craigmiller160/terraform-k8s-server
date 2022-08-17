@@ -4,5 +4,4 @@
 terraform.tfstate
 terraform.tfstate.backup
 phase2/secrets.tfvars
-nexus_config/secrets.tfvars
-1password/secrets.tfvars
+secrets.tfvars
