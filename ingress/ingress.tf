@@ -1,3 +1,6 @@
+# TODO document dev.nexus
+# TODO MacOS on Chrome will not allow the dev.nexus solution, but it seems to be ok with dev.cluster. Not sure why
+# TODO make dev.nexus a variable and add nexus hostname to NoIP
 resource "kubernetes_ingress_v1" "ingress" {
   metadata {
     name = "cluster-ingress"
@@ -9,8 +12,25 @@ resource "kubernetes_ingress_v1" "ingress" {
   }
   spec {
     tls {
-      hosts = [var.ingress_hostname]
+      hosts = [var.ingress_hostname, "dev.nexus"]
       secret_name = "craigmiller160-tls-certs"
+    }
+    rule {
+      host = "dev.nexus"
+      http {
+        path {
+          path = "/"
+          path_type = "Prefix"
+          backend {
+            service {
+              name = "nexus-service"
+              port {
+                number = 8081
+              }
+            }
+          }
+        }
+      }
     }
     rule {
       host = var.ingress_hostname
@@ -23,19 +43,6 @@ resource "kubernetes_ingress_v1" "ingress" {
               name = "ingress-test-service"
               port {
                 number = 80
-              }
-            }
-          }
-        }
-
-        path {
-          path = "/nexus"
-          path_type = "Prefix"
-          backend {
-            service {
-              name = "nexus-service"
-              port {
-                number = 8081
               }
             }
           }
