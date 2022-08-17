@@ -7,10 +7,12 @@ source "$module_file_dir/../scripts/common.sh"
 get_env $1
 backend_arg=$(get_backend_context $2)
 k8s_context_var=$(get_k8s_context_var $2)
+ingress_hostname_var=$(get_ingress_hostname_var $2)
 
 (
   cd "$module_file_dir" &&
   terraform ${@:2} \
     $backend_arg \
-    $k8s_context_var
+    $k8s_context_var \
+    $ingress_hostname_var
 )
