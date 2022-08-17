@@ -86,3 +86,9 @@ Once this is complete, take the new Admin password and the password found in "Te
 nexus_admin_password = "####"
 nexus_craig_password = "####"
 ```
+
+Also. the `./scripts/dev.env` file may have the wrong IP address for the Nexus host (if running for dev). This is because every time MicroK8s is installed on dev its IP changes, and that's the IP used to access the Nexus UI. To find out the IP address of microk8s, run this command:
+
+```bash
+multipass list
+```
