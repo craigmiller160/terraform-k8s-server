@@ -3,47 +3,58 @@
 Once everything is setup, it's time to deploy the infrastructure.
 
 ## Table of Contents
+# TODO write this part
 
-## Three-Phase Process
+## Understanding the Modular Design
 
-Due to limitations in Terraform, the deployment had to be split into three separate phases. Each phase will be described in this document, including what the phase contains and why it needs to be separated. In general the phases need to be run in order for them to work, however after the initial deployment they can be updated individually in most cases.
+The infrastructure here has been organized in a modular fashion. This was done for a reason and has some things that need to be understood about it.
 
-## Dev vs Prod Deployments
+### Why Modular?
 
-The `{env]` argument in all command examples is for specifying `dev` vs `prod`, which will control the deployment destination.
+1. There are certain parts of the infrastructure that couldn't be completely automated or made to go all in one shot. Therefore separate stages were a necessity.
+2. Terraform can struggle to properly plan massive deployments across a variety of systems. Smaller modules means a more efficient and effective Terraform deployment.
 
-## Phase 1
+### Module Ordering
 
-### What it Contains
+When creating & destroying infrastructure, there is an order that must be respected. This is because different modules depend on the result of previous modules. When updating an existing module, for the most part it can be done independently of the rest, unless a change in it will impact another module. In that case, the ordering rules here must be respected.
 
-- 1Password Custom Kubernetes Resource Definition
+1. k8s_custom_resources
+2. 1password
+3. databases
+4. nexus_deployment
+5. nexus_config
+6. ingress
 
-### Why is it Separate?
+## Executing Deployments
 
-The Terraform Kubernetes Provider will not execute a plan with an unknown resource definition. 1Password requires a custom resource definition to be configured as part of its Kubernetes deployment. Therefore this needs to be deployed as a separate infrastructure plan.
+The steps to execute the deployments are the same for all modules.
 
-### How to Deploy
+### Checking All Statuses
 
-Use the `tf.sh` script to deploy the phase:
+There is a script in the root of the project that will go through all the modules and check the status of their plans to report if any changes need to be executed. It is run like this:
 
 ```bash
-./tf.sh {env} phase1 apply
+./all_plans.sh
 ```
 
-## Phase 2
+### Executing Module Plans
 
-### What it Contains
+All terraform commands are properly executed via a shell script in each module. The scripts can easily be invoked from the root of the project. This is done in the following way:
 
-- Postgres Database
-- MongoDB Database
-- Nexus Artifact Repository
-- 1Password Sync/Connect/Operator For Injecting Secrets
+```bash
+# Initialize the module if not done already
+./module_directory/tf.sh init
+# Apply all configuration changes for the module
+./module_directory/tf.sh apply
+# Remove all configuration from the module
+./module_directory/tf.sh destroy
+```
 
-### Why is it Separate?
+## Manual Steps
 
-This phase is the "base" of the infrastructure. Everything that could be deployed in one plan is here. It is the second phase because of the pre-requisites for 1Password.
+Not everything can be automated. Some modules require manual intervention. These are the modules that require it.
 
-### How to Setup
+### 1Password Module
 
 The 1Password credentials and token must be provided as Terraform secret variables in order to run this phase.
 
@@ -51,32 +62,14 @@ First, get the values from 1Password. They can be found in "Tech Stuff" -> "Home
 
 Second, Base64 encode the credentials JSON file.
 
-Third, create the file `./phase2/secrets.tfvars` and put the two values into it like this:
+Third, create the file `./1password/secrets.tfvars` and put the two values into it like this:
 
 ```hcl
 onepassword_creds = "####"
 onepassword_token = "####"
 ```
 
-### How to Deploy
-
-Use the `tf.sh` script to deploy the phase:
-
-```bash
-./tf.sh {env} phase2 apply
-```
-
-## Phase 3
-
-### What it Contains
-
-- All Configuration for Nexus
-
-### Why is it Separate?
-
-Sonatype Nexus, upon first deployment, requires an admin password. This password cannot be set via container configuration, it is randomly generated at first startup and available as a file within the container. Because of this, manually retrieving this password is required before being able to run the Nexus configuration.
-
-### How to Setup
+### Nexus_Config Module
 
 After the Nexus pod is running, ssh into it and grab the password from its file
 
@@ -87,17 +80,15 @@ cat /nexus-data/admin.password
 
 Using this password, open the Nexus UI and log in with it. There will be a prompt to immediately change this password. Change it to the password found in 1Password at "Tech Stuff" -> "Nexus Repository (Admin)".
 
-Once this is complete, take the new Admin password and the password found in "Tech Stuff" -> "Nexus Repository (Craig)" and place them into a Terraform secret variables file, `./phase3/secrets.tfvars`. It should look like this:
+Once this is complete, take the new Admin password and the password found in "Tech Stuff" -> "Nexus Repository (Craig)" and place them into a Terraform secret variables file, `./nexus_config/secrets.tfvars`. It should look like this:
 
 ```hcl
 nexus_admin_password = "####"
 nexus_craig_password = "####"
 ```
 
-### How to Deploy
-
-Use the `tf.sh` script to deploy the phase:
+Also. the `./scripts/dev.env` file may have the wrong IP address for the Nexus host (if running for dev). This is because every time MicroK8s is installed on dev its IP changes, and that's the IP used to access the Nexus UI. To find out the IP address of microk8s, run this command:
 
 ```bash
-./tf.sh {env} phase3 apply
+multipass list
 ```
