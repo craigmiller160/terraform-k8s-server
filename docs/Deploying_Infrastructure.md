@@ -3,7 +3,16 @@
 Once everything is setup, it's time to deploy the infrastructure.
 
 ## Table of Contents
-# TODO write this part
+
+1. [Understanding the Modular Design](#understanding-the-modular-design)
+   1. [Why Modular?](#why-modular)
+   2. [Module Ordering](#module-ordering)
+2. [Executing Deployments](#executing-deployments)
+   1. [Checking All Statuses](#checking-all-statuses)
+   2. [Executing Module Plans](#executing-module-plans)
+3. [Manual Steps](#manual-steps)
+   1. [1Password Module](#1password-module)
+   2. [Nexus_Config Module](#nexus_config-module)
 
 ## Understanding the Modular Design
 
