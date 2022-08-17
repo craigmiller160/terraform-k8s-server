@@ -3,5 +3,4 @@
 .terraform
 terraform.tfstate
 terraform.tfstate.backup
-phase2/secrets.tfvars
 secrets.tfvars
