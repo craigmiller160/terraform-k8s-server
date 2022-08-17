@@ -1,6 +1,9 @@
 # NPM Repository Group
 
 resource "nexus_repository_npm_hosted" "npm_private" {
+  depends_on = [
+    nexus_blobstore_file.npm_private
+  ]
   name   = "npm-private"
   online = true
 
@@ -12,6 +15,9 @@ resource "nexus_repository_npm_hosted" "npm_private" {
 }
 
 resource "nexus_repository_npm_proxy" "npm_proxy" {
+  depends_on = [
+    nexus_blobstore_file.npm_proxy
+  ]
   name   = "npm-proxy"
   online = true
 
@@ -38,6 +44,11 @@ resource "nexus_repository_npm_proxy" "npm_proxy" {
 }
 
 resource "nexus_repository_npm_group" "npm_group" {
+  depends_on = [
+    nexus_blobstore_file.npm_group,
+    nexus_repository_npm_hosted.npm_private,
+    nexus_repository_npm_proxy.npm_proxy
+  ]
   name   = "npm-group"
   online = true
 
@@ -55,6 +66,9 @@ resource "nexus_repository_npm_group" "npm_group" {
 }
 
 resource "nexus_repository_docker_hosted" "docker_private" {
+  depends_on = [
+    nexus_blobstore_file.docker_private
+  ]
   name   = "docker-private"
   online = true
 
@@ -72,6 +86,9 @@ resource "nexus_repository_docker_hosted" "docker_private" {
 }
 
 resource "nexus_repository_docker_proxy" "docker_proxy" {
+  depends_on = [
+    nexus_blobstore_file.docker_proxy
+  ]
   name   = "docker-proxy"
   online = true
 
@@ -107,6 +124,11 @@ resource "nexus_repository_docker_proxy" "docker_proxy" {
 }
 
 resource "nexus_repository_docker_group" "docker_group" {
+  depends_on = [
+    nexus_blobstore_file.docker_group,
+    nexus_repository_docker_hosted.docker_private,
+    nexus_repository_docker_proxy.docker_proxy
+  ]
   name   = "docker-group"
   online = true
 
