@@ -37,7 +37,7 @@ function get_ingress_hostname_var {
   if [ $1 == "fmt" ]; then
     echo ""
   else
-    echo "-var=ingress_hostname=$ingress_hostname"
+    echo "-var=ingress_hostname=$ingress_host"
   fi
 }
 
