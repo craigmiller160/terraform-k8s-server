@@ -43,7 +43,7 @@ The steps to execute the deployments are the same for all modules.
 There is a script in the root of the project that will go through all the modules and check the status of their plans to report if any changes need to be executed. It is run like this:
 
 ```bash
-./all_plans.sh
+./all_plans.sh {dev or prod}
 ```
 
 ### Executing Module Plans
