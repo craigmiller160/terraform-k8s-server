@@ -32,6 +32,15 @@ function get_k8s_context_var {
   fi
 }
 
+# $1 = Command
+function get_ingress_hostname_var {
+  if [ $1 == "fmt" ]; then
+    echo ""
+  else
+    echo "-var=ingress_hostname=$ingress_host"
+  fi
+}
+
 # $1 = Directory, $2 Command
 function get_secrets_file {
   if [ $2 == "fmt" ]; then
