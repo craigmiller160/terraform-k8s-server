@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# TODO what if uninitialized or other error?
+
 # $1 = env, $2 = directory
 function get_plan {
   output=$("./$2/tf.sh" $1 plan | grep "Plan:")
@@ -20,8 +22,24 @@ function validate_env {
 # $1 = env
 function print_plans {
   echo "Getting plans for all modules"
+
   echo "k8s_custom_resources"
   get_plan $1 "k8s_custom_resources"
+
+  echo "1Password"
+  get_plan $1 "1Password"
+
+  echo "databases"
+  get_plan $1 "databases"
+
+  echo "nexus_deployment"
+  get_plan $1 "nexus_deployment"
+
+  echo "nexus_config"
+  get_plan $1 "nexus_config"
+
+  echo "ingress"
+  get_plan $1 "ingress"
 }
 
 validate_env $1
