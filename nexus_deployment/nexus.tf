@@ -21,34 +21,34 @@ resource "kubernetes_deployment" "nexus" {
         }
       }
       spec {
-        init_container {
-          name = "setup"
-          image = "alpine:3.15.5"
-          image_pull_policy = "IfNotPresent"
-          command = ["/bin/sh"]
-          args = [
-            "-c",
-            <<EOF
-              chown -R 200:200 /nexus-data &&
-              apk add openssl &&
-              cat /secret-certs/key | base64 -d > /certs/key-decoded &&
-              cat /secret-certs/cert | base64 -d > /certs/cert-decoded &&
-              openssl pkcs12 -export -out /certs/nexus.p12 -inkey /certs/key-decoded -in /certs/cert-decoded -password pass:password
-            EOF
-          ]
-          volume_mount {
-            mount_path = "/nexus-data"
-            name       = "nexus-data-volume"
-          }
-          volume_mount {
-            mount_path = "/secret-certs"
-            name       = "nexus-secret-certs-volume"
-          }
-          volume_mount {
-            mount_path = "/certs"
-            name       = "nexus-certs-volume"
-          }
-        }
+#        init_container {
+#          name = "setup"
+#          image = "alpine:3.15.5"
+#          image_pull_policy = "IfNotPresent"
+#          command = ["/bin/sh"]
+#          args = [
+#            "-c",
+#            <<EOF
+#              chown -R 200:200 /nexus-data &&
+#              apk add openssl &&
+#              cat /secret-certs/key | base64 -d > /certs/key-decoded &&
+#              cat /secret-certs/cert | base64 -d > /certs/cert-decoded &&
+#              openssl pkcs12 -export -out /certs/nexus.p12 -inkey /certs/key-decoded -in /certs/cert-decoded -password pass:password
+#            EOF
+#          ]
+#          volume_mount {
+#            mount_path = "/nexus-data"
+#            name       = "nexus-data-volume"
+#          }
+#          volume_mount {
+#            mount_path = "/secret-certs"
+#            name       = "nexus-secret-certs-volume"
+#          }
+#          volume_mount {
+#            mount_path = "/certs"
+#            name       = "nexus-certs-volume"
+#          }
+#        }
         container {
           name = "nexus"
           image = var.nexus_image
