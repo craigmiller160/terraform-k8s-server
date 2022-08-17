@@ -9,9 +9,10 @@ resource "kubernetes_ingress_v1" "ingress" {
     }
   }
   spec {
-#    tls {
-#      hosts = ["craigmiller160.ddns.net"]
-#    }
+    tls {
+      hosts = [var.ingress_hostname]
+      secret_name = "craigmiller160-tls-certs"
+    }
     rule {
       host = var.ingress_hostname
       http {
