@@ -13,7 +13,7 @@ resource "kubernetes_ingress_v1" "ingress" {
 #      hosts = ["craigmiller160.ddns.net"]
 #    }
     rule {
-      host = "dev.cluster"
+      host = var.ingress_hostname
       http {
         path {
           path = "/ingress-test"
