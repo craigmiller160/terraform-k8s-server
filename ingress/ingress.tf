@@ -8,7 +8,11 @@ resource "kubernetes_ingress_v1" "ingress" {
     }
   }
   spec {
+#    tls {
+#      hosts = ["craigmiller160.ddns.net"]
+#    }
     rule {
+      host = "dev.cluster"
       http {
         path {
           path = "/ingress-test"
