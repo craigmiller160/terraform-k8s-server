@@ -12,6 +12,7 @@ Once everything is setup, it's time to deploy the infrastructure.
    2. [Executing Module Plans](#executing-module-plans)
 3. [Manual Steps](#manual-steps)
    1. [1Password Module](#1password-module)
+   2. [Nexus_Deployment Module](#nexus-deployment-module)
    2. [Nexus_Config Module](#nexus_config-module)
 
 ## Understanding the Modular Design
@@ -72,6 +73,21 @@ First, get the values from 1Password. They can be found in "Tech Stuff" -> "Home
 Second, Base64 encode the credentials JSON file.
 
 Third, create the file `./1password/secrets.tfvars` and put the two values into it like this:
+
+```hcl
+onepassword_creds = "####"
+onepassword_token = "####"
+```
+
+### Nexus Deployment Module
+
+The 1Password credentials and token must be provided as Terraform secret variables in order to run this phase.
+
+First, get the values from 1Password. They can be found in "Tech Stuff" -> "Home Server Production Credentials" and "Tech Stuff" -> "Home Server Production Access Token".
+
+Second, Base64 encode the credentials JSON file.
+
+Third, create the file `./nexus_deployment/secrets.tfvars` and put the two values into it like this:
 
 ```hcl
 onepassword_creds = "####"
