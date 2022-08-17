@@ -4,7 +4,8 @@
 
 # $1 = env, $2 = directory
 function get_plan {
-  output=$("./$2/tf.sh" $1 plan | grep "Plan:")
+  plan=$(./$2/tf.sh $1 plan)
+  output=$(echo "$plan" | grep "Plan:")
   if [ ${#output} -gt 0 ]; then
     echo "  $output"
   fi
