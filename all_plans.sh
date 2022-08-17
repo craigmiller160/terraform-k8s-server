@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# TODO what if uninitialized or other error?
-
 # $1 = env, $2 = directory
 function get_plan {
   plan=$(./$2/tf.sh $1 plan)
