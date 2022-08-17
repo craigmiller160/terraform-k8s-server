@@ -1,4 +1,4 @@
-# TODO add to docs the dev hostname configuration
+# TODO add to docs the dev hostname configuration in /etc/hosts
 resource "kubernetes_ingress_v1" "ingress" {
   metadata {
     name = "cluster-ingress"
