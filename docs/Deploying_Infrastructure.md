@@ -13,6 +13,7 @@ Once everything is setup, it's time to deploy the infrastructure.
 3. [Manual Steps](#manual-steps)
    1. [1Password Module](#1password-module)
    2. [Nexus_Config Module](#nexus_config-module)
+   3. [Ingress Module](#ingress-module)
 
 ## Understanding the Modular Design
 
@@ -101,3 +102,7 @@ Also. the `./scripts/dev.env` file may have the wrong IP address for the Nexus h
 ```bash
 multipass list
 ```
+
+### Ingress Module
+
+The Ingress requires that a hostname is used to communicate with the services routed to by the ingress. In production, the hostname is `craigmiller160.ddns.net`, the DNS name provided by NoIP. In dev, it is simply `dev.cluster`. The `/etc/hosts` file must be updated with that name and the IP address of the Dev MicroK8s.
