@@ -1,8 +1,11 @@
-# TODO ingress crashes and completely dies far too easily if a path ends in 404
-# TODO need to add other prod services here
 resource "kubernetes_ingress_v1" "ingress" {
   metadata {
     name = "cluster-ingress"
+    namespace = "default"
+    annotations = {
+      "kubernetes.io/ingress.class" = "public"
+      "nginx.ingress.kubernetes.io/rewrite-target" = "/"
+    }
   }
   spec {
     rule {
