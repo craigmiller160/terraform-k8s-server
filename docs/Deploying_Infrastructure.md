@@ -25,6 +25,31 @@ When creating & destroying infrastructure, there is an order that must be respec
 5. nexus_config
 6. ingress
 
+## Executing Deployments
+
+The steps to execute the deployments are the same for all modules.
+
+### Checking All Statuses
+
+There is a script in the root of the project that will go through all the modules and check the status of their plans to report if any changes need to be executed. It is run like this:
+
+```bash
+./all_plans.sh
+```
+
+### Executing Module Plans
+
+All terraform commands are properly executed via a shell script in each module. The scripts can easily be invoked from the root of the project. This is done in the following way:
+
+```bash
+# Initialize the module if not done already
+./module_directory/tf.sh init
+# Apply all configuration changes for the module
+./module_directory/tf.sh apply
+# Remove all configuration from the module
+./module_directory/tf.sh destroy
+```
+
 
 
 
