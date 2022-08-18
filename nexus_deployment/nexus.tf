@@ -41,6 +41,9 @@ resource "kubernetes_deployment" "nexus" {
           port {
             container_port = 8081
           }
+          port {
+            container_port = 8083
+          }
           volume_mount {
             mount_path = "/nexus-data"
             name       = "nexus-data-volume"
@@ -63,7 +66,7 @@ resource "kubernetes_service" "nexus_service" {
     namespace = "default"
   }
   spec {
-    type = "NodePort"
+    type = "ClusterIP"
     selector = {
       app = "nexus"
     }
@@ -71,14 +74,12 @@ resource "kubernetes_service" "nexus_service" {
       name = "standard"
       port = 8081
       target_port = 8081
-      node_port = 30003
       protocol = "TCP"
     }
     port {
       name = "docker-http"
       port = 8083
       target_port = 8083
-      node_port = 30004
       protocol = "TCP"
     }
   }

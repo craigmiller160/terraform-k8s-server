@@ -50,12 +50,12 @@ function print_plans {
   get_plan $1 "nexus_deployment"
   stop_if_error $?
 
-  echo "nexus_config"
-  get_plan $1 "nexus_config"
-  stop_if_error $?
-
   echo "ingress"
   get_plan $1 "ingress"
+  stop_if_error $?
+
+  echo "nexus_config"
+  get_plan $1 "nexus_config"
   stop_if_error $?
 }
 

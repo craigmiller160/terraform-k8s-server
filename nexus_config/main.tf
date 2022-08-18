@@ -16,5 +16,5 @@ provider "nexus" {
   insecure = true
   password = var.nexus_admin_password
   username = "admin"
-  url = join("", ["http://", var.nexus_host, ":30003"])
+  url = join("", ["https://", var.nexus_host])
 }
