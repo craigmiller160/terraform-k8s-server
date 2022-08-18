@@ -1,6 +1,4 @@
-# TODO document dev.nexus
-# TODO MacOS on Chrome will not allow the dev.nexus solution, but it seems to be ok with dev.cluster. Not sure why
-# TODO make dev.nexus a variable and add nexus hostname to NoIP
+# TODO document the three hostnames
 resource "kubernetes_ingress_v1" "ingress" {
   metadata {
     name = "cluster-ingress"
