@@ -229,6 +229,5 @@ resource "kubernetes_manifest" "secret_database_tls_certs" {
 
 resource "kubernetes_manifest" "secret_ingress_certs" {
   depends_on = [kubernetes_deployment.onepassword_connect_operator]
-  manifest = var.environment == "dev" ? yamldecode(local.onepassword_secret_values_dev_tls_doc) :
-    yamldecode(local.onepassword_secret_values_craigmiller160_tls_doc)
+  manifest = var.environment == "dev" ? yamldecode(local.onepassword_secret_values_dev_tls_doc) : yamldecode(local.onepassword_secret_values_craigmiller160_tls_doc)
 }

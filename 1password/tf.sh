@@ -15,5 +15,5 @@ secrets_file=$(get_secrets_file $module_file_dir $2)
     $backend_arg \
     $k8s_context_var \
     $secrets_file \
-    "-var=$1"
+    "-var=environment=$1"
 )
