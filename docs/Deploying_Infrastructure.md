@@ -32,8 +32,8 @@ When creating & destroying infrastructure, there is an order that must be respec
 2. 1password
 3. databases
 4. nexus_deployment
-5. nexus_config
-6. ingress
+5. ingress
+6. nexus_config
 
 ## Executing Deployments
 
