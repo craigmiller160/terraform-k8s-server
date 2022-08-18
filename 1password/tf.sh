@@ -14,5 +14,6 @@ secrets_file=$(get_secrets_file $module_file_dir $2)
   terraform ${@:2} \
     $backend_arg \
     $k8s_context_var \
-    $secrets_file
+    $secrets_file \
+    "-var=$1"
 )

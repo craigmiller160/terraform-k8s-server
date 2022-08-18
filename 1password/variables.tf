@@ -9,3 +9,7 @@ variable "onepassword_creds" {
 variable "onepassword_token" {
   type = string
 }
+
+variable "environment" {
+  type = string
+}
