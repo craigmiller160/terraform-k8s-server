@@ -37,7 +37,7 @@ function get_ingress_hostname_var {
   if [ $1 == "fmt" ]; then
     echo ""
   else
-    echo "-var=ingress_cluster_hostname=$ingress_cluster_host -var=ingress_nexus_hostname=$ingress_nexus_hostname -var=ingress_nexus_docker_hostname=$ingress_nexus_docker_hostname"
+    echo "-var=ingress_cluster_hostname=$ingress_cluster_host -var=ingress_nexus_hostname=$ingress_nexus_host -var=ingress_nexus_docker_hostname=$ingress_nexus_docker_host"
   fi
 }
 
