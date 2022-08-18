@@ -13,7 +13,7 @@ resource "kubernetes_ingress_v1" "ingress" {
   spec {
     tls {
       hosts = [var.ingress_hostname, "dev.nexus"]
-      secret_name = "craigmiller160-tls-certs"
+      secret_name = "ingress-tls-certs"
     }
     rule {
       host = "dev.nexus"
