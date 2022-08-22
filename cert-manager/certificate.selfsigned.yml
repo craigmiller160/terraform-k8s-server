@@ -5,7 +5,8 @@ metadata:
   namespace: cert-manager-test
 spec:
   dnsNames:
-    - example.com
+    - dev.cluster.info
   secretName: selfsigned-cert-tls
   issuerRef:
+    # TODO rename this
     name: test-selfsigned
