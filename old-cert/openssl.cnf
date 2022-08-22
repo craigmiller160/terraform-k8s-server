@@ -1,0 +1,25 @@
+[req]
+distinguished_name = req_distinguished_name
+req_extensions = v3_req
+
+[req_distinguished_name]
+countryName = US
+countryName_default = US
+stateOrProvinceName = Florida
+stateOrProvinceName_default = Florida
+localityName = Tampa
+localityName_default = Tampa
+organizationalUnitName = Craig_Development
+organizationalUnitName_default = Craig_Development
+commonName = dev.cluster.info
+commonName_max = 64
+
+[ v3_req ]
+# Extensions to add to a certificate request
+basicConstraints = CA:FALSE
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = dev.nexus.info
+DNS.2 = dev.nexus-docker.info
