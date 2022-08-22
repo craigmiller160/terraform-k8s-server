@@ -24,7 +24,7 @@ To install MicroK8s, use the commands that are appropriate for the environment.
 **Dev**
 ```bash
 brew install ubuntu/microk8s/microk8s
-microk8s install or microk8s install --channel 1.24
+microk8s install --channel 1.24
 ```
 
 **Prod**
