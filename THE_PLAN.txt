@@ -1,0 +1,6 @@
+create cert manager before databases
+use cert manager certs in databases
+VALIDATE
+then move on to upgrading the ingress
+
+ALL OF THIS IS WITH SELF-SIGNED! Let's Encrypt comes next once the self-signed path works
