@@ -30,10 +30,11 @@ When creating & destroying infrastructure, there is an order that must be respec
 
 1. k8s_custom_resources
 2. 1password
-3. databases
-4. nexus_deployment
-5. ingress
-6. nexus_config
+3. cert_manager
+4. databases
+5. nexus_deployment
+6. ingress
+7. nexus_config
 
 ## Executing Deployments
 
