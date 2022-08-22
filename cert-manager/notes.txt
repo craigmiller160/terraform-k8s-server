@@ -1,0 +1,4 @@
+Not sure if I need the CRDs file
+I downloaded v1.9.1
+
+If this works, I need to split this up between the CRD section and the ingress section
