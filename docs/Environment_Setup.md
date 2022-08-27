@@ -10,6 +10,7 @@ There are manual steps necessary for setting up the Dev & Prod environments befo
    3. [Additional Production Configuration](#additional-production-configuration)
 2. [Configuring the Dev Machine for Multiple Kubernetes Clusters](#configuring-the-dev-machine-for-multiple-kubernetes-clusters)
    1. [Install Kubectl](#install-kubectl)
+   2. [Install Helm](#install-helm)
    2. [Prepare Kubectl Configuration](#prepare-kubectl-configuration)
    3. [Switching Between Clusters](#switching-between-clusters)
 
@@ -65,6 +66,14 @@ The Kubernetes `kubectl` tool needs to be installed on the dev machine. It can b
 
 ```bash
 brew install kubernetes-cli
+```
+
+### Install Helm
+
+The Kubernetes `helm` tool needs to be installed on the dev machine. It can be done so with this command:
+
+```bash
+brew install helm
 ```
 
 ### Prepare Kubectl Configuration
